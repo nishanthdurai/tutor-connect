@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         btn_tutor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, tutorsignup.class));
+                startActivity(new Intent(MainActivity.this, tutorsignin.class));
             }
         });
 

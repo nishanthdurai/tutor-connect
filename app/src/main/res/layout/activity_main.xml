@@ -13,7 +13,7 @@
         android:layout_marginRight="30dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:background="ba">
+        android:background="@color/background2">
 
         <LinearLayout
             android:id="@+id/btn_tutor"
