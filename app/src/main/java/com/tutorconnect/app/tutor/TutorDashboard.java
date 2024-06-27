@@ -47,6 +47,8 @@ public class TutorDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_dashboard);
 
+        setTitle("Tutor");
+
         // Enable the Up button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

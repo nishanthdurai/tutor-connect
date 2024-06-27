@@ -37,7 +37,6 @@ public class TutorSignUp extends AppCompatActivity {
     EditText et_email, et_password, et_confirmPassword, et_username;
     Button btn_Register;
     TextView tv_loginBtn;
-//    LinearLayout ll_registerWithGoogle;
 
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
             "[a-zA-Z0-9_+&*-]+)*@" +
@@ -57,6 +56,8 @@ public class TutorSignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_sign_up);
 
+        setTitle("Tutor");
+
         // Enable the Up button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -69,8 +70,6 @@ public class TutorSignUp extends AppCompatActivity {
         et_confirmPassword = findViewById(R.id.et_confirmPassword);
         btn_Register = findViewById(R.id.btn_register);
         tv_loginBtn = findViewById(R.id.tv_loginButton);
-
-//        ll_registerWithGoogle = findViewById(R.id.ll_registerWithGoogle);
 
         progressDialog = new ProgressDialog(this);
 
@@ -90,13 +89,6 @@ public class TutorSignUp extends AppCompatActivity {
                 PerformAuth();
             }
         });
-
-//        ll_registerWithGoogle.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(TutorSignUp.this, TutorSignInWithGoogle.class));
-//            }
-//        });
 
     }
 

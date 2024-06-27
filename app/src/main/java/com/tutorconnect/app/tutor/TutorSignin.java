@@ -31,7 +31,6 @@ public class TutorSignin extends AppCompatActivity {
 
     TextView tv_forgotPassword;
 
-    LinearLayout ll_loginWithGoogle;
 
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
             "[a-zA-Z0-9_+&*-]+)*@" +
@@ -49,6 +48,8 @@ public class TutorSignin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutor_signin);
+
+        setTitle("Tutor");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
@@ -69,8 +70,6 @@ public class TutorSignin extends AppCompatActivity {
             }
         });
 
-        ll_loginWithGoogle = findViewById(R.id.ll_loginWithGoogle);
-
         progressDialog = new ProgressDialog(this);
 
         mAuth = FirebaseAuth.getInstance();
@@ -87,13 +86,6 @@ public class TutorSignin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TutorSignin.this, TutorSignUp.class));
-            }
-        });
-
-        ll_loginWithGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TutorSignin.this, TutorSignInWithGoogle.class));
             }
         });
 

@@ -53,6 +53,8 @@ public class AddParent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_parent);
 
+        setTitle("Tutor");
+
         // Enable the Up button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

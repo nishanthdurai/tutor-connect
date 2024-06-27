@@ -96,34 +96,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_loginWithGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/bg_rounded_input_field"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="9dp">
-
-            <ImageView
-                android:id="@+id/iv_loginWithGoogle"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="8dp"
-                android:src="@drawable/google" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:text="Login With Google"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"

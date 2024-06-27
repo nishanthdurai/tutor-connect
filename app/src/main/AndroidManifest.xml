@@ -63,9 +63,6 @@
             android:name="com.tutorconnect.app.tutor.TutorResetPasswordActivity"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.TutorSignInWithGoogle"
-            android:exported="true" />
-        <activity
             android:name="com.tutorconnect.app.parent.ParentDashboard"
             android:exported="true" />
         <activity
