@@ -1,16 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TutorConnect" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.TutorConnectNight" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/primary</item> <!-- #2196F3 -->
+        <item name="colorPrimaryVariant">@color/primaryVariant</item> <!-- #0D47A1 -->
+        <item name="colorOnPrimary">@color/onPrimary</item> <!-- #FFFFFF -->
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/secondary</item> <!-- #FFEB3B -->
+        <item name="colorSecondaryVariant">@color/secondaryVariant</item> <!-- #FFC107 -->
+        <item name="colorOnSecondary">@color/onSecondary</item> <!-- #000000 -->
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>
