@@ -3,11 +3,11 @@ package com.tutorconnect.app.tutor;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,15 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.tutorconnect.app.R;
+import com.tutorconnect.app.model.Tutor;
 
-import java.util.HashMap;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class TutorSignUp extends AppCompatActivity {
@@ -34,7 +37,7 @@ public class TutorSignUp extends AppCompatActivity {
     public static final String ATTENDANCE = "Attendance";
     public static final String REMARKS = "Remarks";
 
-    EditText et_email, et_password, et_confirmPassword, et_username;
+    EditText et_email, et_password, et_confirmPassword;
     Button btn_Register;
     TextView tv_loginBtn;
 
@@ -47,9 +50,7 @@ public class TutorSignUp extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    FirebaseAuth mAuth;
-    FirebaseUser mUser;
-    DatabaseReference reference;
+    DatabaseReference dbInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,6 @@ public class TutorSignUp extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        et_username = findViewById(R.id.et_username);
         et_email = findViewById(R.id.et_email);
         et_password = findViewById(R.id.et_password);
         et_confirmPassword = findViewById(R.id.et_confirmPassword);
@@ -73,8 +73,7 @@ public class TutorSignUp extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+        dbInstance = FirebaseDatabase.getInstance().getReference();
 
         tv_loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,11 +91,62 @@ public class TutorSignUp extends AppCompatActivity {
 
     }
 
+    private void verifyEmailExistence(String email, String password) {
+        progressDialog.setMessage("Creating your Account....");
+        progressDialog.setTitle("Creating");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        Query emailQuery = dbInstance.child("tutors").orderByChild("email").equalTo(email);
+        emailQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    progressDialog.dismiss();
+                    Toast.makeText(TutorSignUp.this, "Email already exists.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // create new record for user in firebase-realtime-database
+                    String key = UUID.randomUUID().toString();
+                    Tutor tutor = new Tutor(email, password, key);
+                    dbInstance.child("tutors").child(key).setValue(tutor).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            progressDialog.dismiss();
+                            if (task.isSuccessful()) {
+                                progressDialog.dismiss();
+                                Toast.makeText(TutorSignUp.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(TutorSignUp.this, TutorSignin.class));
+                            } else {
+                                progressDialog.dismiss();
+                                Toast.makeText(TutorSignUp.this, "Error registering user, try again later..!", Toast.LENGTH_SHORT).show();
+                                Log.e("Firebase", "Registration failed", task.getException());
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(TutorSignUp.this, "Error registering user, try again later..!",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
+                Log.e("Firebase", "Database error", databaseError.toException());
+                Toast.makeText(TutorSignUp.this, "Error registering user, try again later..!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void PerformAuth() {
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
         String confirmPassword = et_confirmPassword.getText().toString();
-        String username = et_username.getText().toString();
 
         if (email.isEmpty()) {
             et_email.setError("Please Enter Email");
@@ -114,53 +164,17 @@ public class TutorSignUp extends AppCompatActivity {
             et_confirmPassword.setError("Password doesn't matches");
             return;
         } else {
-            progressDialog.setMessage("Creating your Account....");
-            progressDialog.setTitle("Creating");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-
-                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                        String userId = firebaseUser.getUid();
-
-                        reference = FirebaseDatabase.getInstance().getReference().child(TUTOR_USERS).child(userId);
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("id", userId);
-                        hashMap.put("username", username);
-                        hashMap.put("email", email);
-                        reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    sendUserToMainActivity(userId,email,password);
-                                }
-                            }
-                        });
-
-
-                        Toast.makeText(TutorSignUp.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                    } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(TutorSignUp.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            verifyEmailExistence(email, password);
         }
     }
 
     private void sendUserToMainActivity(String userId, String email, String password) {
         Intent intent = new Intent(TutorSignUp.this, TutorRealDashboard.class);
-        intent.putExtra("email",email);
-        intent.putExtra("userId",email);
-        intent.putExtra("password",password);
+        intent.putExtra("email", email);
+        intent.putExtra("userId", email);
+        intent.putExtra("password", password);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
     }
 
     @Override

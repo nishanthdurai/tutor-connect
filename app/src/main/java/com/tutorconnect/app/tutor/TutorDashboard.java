@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tutorconnect.app.Model.tutor.StudentModel;
+import com.tutorconnect.app.model.StudentTutor;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.adapter.tutor.StudentAdapter;
 
@@ -38,7 +38,7 @@ public class TutorDashboard extends AppCompatActivity {
     String email = "";
     String password = "";
 
-    List<StudentModel> mList = new ArrayList<>();
+    List<StudentTutor> mList = new ArrayList<>();
     RecyclerView recyclerView;
     StudentAdapter mAdapter;
 
@@ -92,7 +92,7 @@ public class TutorDashboard extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     mList.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        StudentModel model = dataSnapshot.getValue(StudentModel.class);
+                        StudentTutor model = dataSnapshot.getValue(StudentTutor.class);
                         Log.d("TAG", "onDataChange: " + model.getStudentName());
                         mList.add(model);
                     }

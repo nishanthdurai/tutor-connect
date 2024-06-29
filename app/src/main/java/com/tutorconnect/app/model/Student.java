@@ -1,9 +1,8 @@
-package com.tutorconnect.app.Model.tutor;
+package com.tutorconnect.app.model;
 
-public class StudentModel {
+public class Student {
     private String studentName;
     private String studentSubject;
-    private String studentEmail;
 
     public String getStudentName() {
         return studentName;
@@ -21,20 +20,11 @@ public class StudentModel {
         this.studentSubject = studentSubject;
     }
 
-    public String getStudentEmail() {
-        return studentEmail;
+    public Student() {
     }
 
-    public void setStudentEmail(String studentEmail) {
-        this.studentEmail = studentEmail;
-    }
-
-    public StudentModel() {
-    }
-
-    public StudentModel(String studentName, String studentSubject,String studentEmail) {
+    public Student(String studentName, String studentSubject) {
         this.studentName = studentName;
         this.studentSubject = studentSubject;
-        this.studentEmail = studentEmail;
     }
 }

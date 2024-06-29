@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tutorconnect.app.Model.NotesModel;
+import com.tutorconnect.app.model.NotesModel;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.adapter.studentViewAssignmentAdapter;
 

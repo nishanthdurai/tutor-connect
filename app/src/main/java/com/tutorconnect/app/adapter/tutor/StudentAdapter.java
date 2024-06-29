@@ -22,8 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tutorconnect.app.Model.tutor.StudentModel;
 import com.tutorconnect.app.R;
+import com.tutorconnect.app.model.StudentTutor;
 import com.tutorconnect.app.tutor.TutorSignUp;
 
 import java.time.LocalDate;
@@ -34,14 +34,14 @@ import java.util.List;
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHolder> {
 
     private final Context mContext;
-    private List<StudentModel> mList = new ArrayList<>();
+    private List<StudentTutor> mList = new ArrayList<>();
     private String teacherId = "";
     private String studentRemarks="0/10";
     private String studentAttendance="absent";
 
     private final ProgressDialog progressDialog;
 
-    public StudentAdapter(Context mContext, List<StudentModel> mList, String teacherId) {
+    public StudentAdapter(Context mContext, List<StudentTutor> mList, String teacherId) {
         this.mContext = mContext;
         this.mList = mList;
         this.teacherId = teacherId;
@@ -58,7 +58,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        StudentModel model = mList.get(position);
+        StudentTutor model = mList.get(position);
         holder.tv_studentName.setText(model.getStudentName());
         holder.tv_studentSubject.setText(model.getStudentSubject());
         LocalDate currentDate = LocalDate.now();
@@ -97,7 +97,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
         });
     }
 
-    private void createDialog(StudentModel model, String date) {
+    private void createDialog(StudentTutor model, String date) {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         View view = LayoutInflater.from(mContext).inflate(R.layout.custom_remarks, null, false);
         builder.setView(view);
@@ -149,7 +149,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
 //        });
 //    }
 
-    private void markAsPresent(StudentModel model, String date) {
+    private void markAsPresent(StudentTutor model, String date) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = firebaseUser.getUid();
 

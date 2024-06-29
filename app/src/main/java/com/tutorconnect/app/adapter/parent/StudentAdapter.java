@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tutorconnect.app.Model.parent.StudentModel;
+import com.tutorconnect.app.model.StudentParent;
 import com.tutorconnect.app.R;
 
 import java.util.List;
@@ -20,10 +20,10 @@ import java.util.List;
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHolder>{
 
     private final Context mContext;
-    private final List<StudentModel> mList;
+    private final List<StudentParent> mList;
     private ProgressDialog progressDialog;
 
-    public StudentAdapter(Context mContext, List<StudentModel> mList) {
+    public StudentAdapter(Context mContext, List<StudentParent> mList) {
         this.mContext = mContext;
         this.mList = mList;
         progressDialog = new ProgressDialog(mContext);
@@ -39,7 +39,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        StudentModel model = mList.get(position);
+        StudentParent model = mList.get(position);
         holder.tv_studentName.setText(model.getStudentName());
         holder.tv_studentSubject.setText(model.getStudentSubject());
         holder.tv_todayDate.setText(model.getDate());

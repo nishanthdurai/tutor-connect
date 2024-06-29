@@ -1,4 +1,4 @@
-package com.tutorconnect.app.Model;
+package com.tutorconnect.app.model;
 
 public class NotesModel {
     String name, url;

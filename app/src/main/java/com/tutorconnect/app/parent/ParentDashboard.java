@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tutorconnect.app.Model.parent.StudentModel;
+import com.tutorconnect.app.model.StudentParent;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.adapter.parent.StudentAdapter;
 import com.tutorconnect.app.tutor.TutorSignUp;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class ParentDashboard extends AppCompatActivity {
 
-    List<StudentModel> mList = new ArrayList<>();
+    List<StudentParent> mList = new ArrayList<>();
     RecyclerView recyclerView;
     StudentAdapter mAdapter;
     Intent intent;
@@ -65,7 +65,7 @@ public class ParentDashboard extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     mList.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        StudentModel model = dataSnapshot.getValue(StudentModel.class);
+                        StudentParent model = dataSnapshot.getValue(StudentParent.class);
                         mList.add(model);
                     }
                     mAdapter = new StudentAdapter(ParentDashboard.this, mList);

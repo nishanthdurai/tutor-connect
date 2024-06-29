@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tutorconnect.app.Model.NotesModel;
+import com.tutorconnect.app.model.NotesModel;
 import com.tutorconnect.app.R;
 
 import java.util.ArrayList;

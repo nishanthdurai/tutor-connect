@@ -1,6 +1,6 @@
-package com.tutorconnect.app.Model.parent;
+package com.tutorconnect.app.model;
 
-public class StudentModel {
+public class StudentParent {
     private String studentName;
     private String studentSubject;
     private String present;
@@ -31,7 +31,7 @@ public class StudentModel {
         this.studentSubject = studentSubject;
     }
 
-    public StudentModel() {
+    public StudentParent() {
     }
 
     public String getPresent() {
@@ -50,7 +50,7 @@ public class StudentModel {
         this.date = date;
     }
 
-    public StudentModel(String studentName, String studentSubject, String present, String date, String remarks) {
+    public StudentParent(String studentName, String studentSubject, String present, String date, String remarks) {
         this.studentName = studentName;
         this.studentSubject = studentSubject;
         this.present = present;

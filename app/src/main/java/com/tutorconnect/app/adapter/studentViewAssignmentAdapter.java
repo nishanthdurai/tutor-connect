@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tutorconnect.app.Model.NotesModel;
+import com.tutorconnect.app.model.NotesModel;
 import com.tutorconnect.app.R;
 
 import java.util.ArrayList;
