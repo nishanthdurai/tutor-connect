@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.tutorconnect.app.parent.ParentSignin;
 import com.tutorconnect.app.student.StudentSignin;
-import com.tutorconnect.app.tutor.TutorSignUp;
+import com.tutorconnect.app.tutor.TutorSignIn;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         btn_student = findViewById(R.id.btn_student);
         btn_parent = findViewById(R.id.btn_parent);
 
-        btn_tutor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TutorSignUp.class)));
+        btn_tutor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TutorSignIn.class)));
 
         btn_parent.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ParentSignin.class)));
 

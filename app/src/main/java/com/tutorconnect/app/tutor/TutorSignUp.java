@@ -78,7 +78,7 @@ public class TutorSignUp extends AppCompatActivity {
         tv_loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(TutorSignUp.this, TutorSignin.class));
+                startActivity(new Intent(TutorSignUp.this, TutorSignIn.class));
             }
         });
 
@@ -115,7 +115,7 @@ public class TutorSignUp extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 progressDialog.dismiss();
                                 Toast.makeText(TutorSignUp.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(TutorSignUp.this, TutorSignin.class));
+                                startActivity(new Intent(TutorSignUp.this, TutorSignIn.class));
                             } else {
                                 progressDialog.dismiss();
                                 Toast.makeText(TutorSignUp.this, "Error registering user, try again later..!", Toast.LENGTH_SHORT).show();

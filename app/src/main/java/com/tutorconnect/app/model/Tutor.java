@@ -25,4 +25,11 @@ public class Tutor {
         this.password = password;
         this.key = key;
     }
+
+    public String toString() {
+        return "Tutor{" +
+                "name='" + password + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

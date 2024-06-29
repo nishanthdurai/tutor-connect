@@ -47,7 +47,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Email"
-            android:text="nishanthduraisamy@gmail.com"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
 
@@ -57,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Password"
-            android:text="password"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
 
@@ -67,7 +65,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:hint="Confirm Password"
-            android:text="password"
             android:textColor="@color/textColor"
             android:textSize="16sp" />
 

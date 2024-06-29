@@ -78,7 +78,7 @@
             android:name="com.tutorconnect.app.tutor.TutorDashboard"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.TutorSignin"
+            android:name="com.tutorconnect.app.tutor.TutorSignIn"
             android:exported="true" />
         <activity
             android:name="com.tutorconnect.app.tutor.TutorSignUp"
