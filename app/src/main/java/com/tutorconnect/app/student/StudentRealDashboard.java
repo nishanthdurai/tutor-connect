@@ -17,7 +17,7 @@ public class StudentRealDashboard extends AppCompatActivity {
     CardView btn_viewRemarks;
 
     Intent intent;
-    String childName = "";
+    String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +37,13 @@ public class StudentRealDashboard extends AppCompatActivity {
         btn_viewRemarks = findViewById(R.id.cv_viewRemarks);
 
         intent = getIntent();
-        childName = intent.getStringExtra("childName");
+        name = intent.getStringExtra("StudentSignin");
 
         btn_viewNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentRealDashboard.this, StudentViewNotes.class);
-                intent.putExtra("childName", childName);
+                intent.putExtra("studentName", name);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -53,7 +53,7 @@ public class StudentRealDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentRealDashboard.this, ViewAssignment.class);
-                intent.putExtra("childName", childName);
+                intent.putExtra("studentName", name);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -62,7 +62,7 @@ public class StudentRealDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentRealDashboard.this, StudentDashboard.class);
-                intent.putExtra("childName", childName);
+                intent.putExtra("studentName", name);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -71,13 +71,10 @@ public class StudentRealDashboard extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // Handle the back button action
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {// Handle the back button action
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

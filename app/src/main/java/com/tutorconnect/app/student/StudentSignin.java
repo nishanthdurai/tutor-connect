@@ -3,23 +3,25 @@ package com.tutorconnect.app.student;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.tutorconnect.app.R;
+import com.tutorconnect.app.model.StudentTutor;
 
 import java.util.regex.Pattern;
 
@@ -27,25 +29,19 @@ public class StudentSignin extends AppCompatActivity {
 
     EditText et_email, et_password;
     Button btn_login;
-    TextView tv_registerBtn;
 
     TextView tv_forgotPassword;
-
-    LinearLayout ll_loginWithGoogle;
 
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
             "[a-zA-Z0-9_+&*-]+)*@" +
             "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
             "A-Z]{2,7}$";
-    String childName = "";
+
+    DatabaseReference dbInstance;
 
     Pattern pat = Pattern.compile(emailRegex);
 
     ProgressDialog progressDialog;
-
-    FirebaseAuth mAuth;
-    FirebaseUser mUser;
-    private EditText et_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +54,13 @@ public class StudentSignin extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-        };
+        }
+        ;
 
         et_email = findViewById(R.id.et_email);
         et_password = findViewById(R.id.et_password);
         btn_login = findViewById(R.id.btn_login);
         tv_forgotPassword = findViewById(R.id.tv_forgotPassword);
-        et_name = findViewById(R.id.et_name);
 
         tv_forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,8 +71,7 @@ public class StudentSignin extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+        dbInstance = FirebaseDatabase.getInstance().getReference();
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +85,7 @@ public class StudentSignin extends AppCompatActivity {
     private void performLogin() {
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
-        childName = et_name.getText().toString();
+
         if (email.isEmpty()) {
             et_email.setError("Please Enter Email");
             return;
@@ -109,40 +104,58 @@ public class StudentSignin extends AppCompatActivity {
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            // validate credentials with email and password
+            Query emailQuery = dbInstance.child("students").orderByChild("email").equalTo(email);
+            emailQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-                        sendUserToMainActivity();
-                        Toast.makeText(StudentSignin.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    progressDialog.dismiss();
+                    if (dataSnapshot.exists()) {
+                        for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
+                            StudentTutor student = tutorSnapshot.getValue(StudentTutor.class);
+                            if (student != null && password.equals(student.getPassword())) {
+                                // check if password is valid
+                                Toast.makeText(StudentSignin.this, "SignIn success.", Toast.LENGTH_SHORT).show();
+                                sendUserToMainActivity(student);
+                                return; // Exit once a match is found
+                            }
+                        }
+                        Toast.makeText(StudentSignin.this, "Invalid password..!", Toast.LENGTH_SHORT).show();
                     } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(StudentSignin.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StudentSignin.this, "Email is not registered..!", Toast.LENGTH_SHORT).show();
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    progressDialog.dismiss();
+                    Log.e("Firebase", "Database error", databaseError.toException());
+                    Toast.makeText(StudentSignin.this, "Error validating credentials, " + "try again later..!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    private void sendUserToMainActivity() {
-        Intent intent = new Intent(StudentSignin.this, StudentRealDashboard.class);
-        intent.putExtra("childName", childName);
+    // if password change required send student to password update screen
+    private void sendUserToMainActivity(StudentTutor student) {
+        Class<? extends AppCompatActivity> targetActivity = student.getRequirePasswordChange() ?
+                StudentPasswordChangeActivity.class : StudentRealDashboard.class;
+
+        Intent intent = new Intent(StudentSignin.this, targetActivity);
+        intent.putExtra("studentName", student.getName());
+        intent.putExtra("studentId", student.getId());
+        intent.putExtra("tutorId", student.getTutorId());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // Handle the back button action
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {// Handle the back button action
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 }
