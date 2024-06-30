@@ -144,10 +144,10 @@ public class TutorSignIn extends AppCompatActivity {
         }
     }
 
-    private void sendUserToMainActivity(String userId, String email, String password) {
+    private void sendUserToMainActivity(String tutorId, String email, String password) {
         Intent intent = new Intent(TutorSignIn.this, TutorRealDashboard.class);
         intent.putExtra("email", email);
-        intent.putExtra("userId", userId);
+        intent.putExtra("tutorId", tutorId);
         intent.putExtra("password", password);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);

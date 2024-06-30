@@ -62,7 +62,7 @@ public class AddStudent extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        et_name = findViewById(R.id.et_username);
+        et_name = findViewById(R.id.parent_name);
         et_email = findViewById(R.id.et_email);
         et_password = findViewById(R.id.et_password);
         et_subject = findViewById(R.id.et_subject);
@@ -72,7 +72,7 @@ public class AddStudent extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         intent = getIntent();
-        tutorId = intent.getStringExtra("teacherId");
+        tutorId = intent.getStringExtra("tutorId");
         tutorEmail = intent.getStringExtra("email");
         tutorPassword = intent.getStringExtra("password");
 

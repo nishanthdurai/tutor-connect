@@ -68,7 +68,7 @@ public class TutorDashboard extends AppCompatActivity {
 
     private void onClickAddNewStudent() {
         Intent intent = new Intent(TutorDashboard.this, AddStudent.class);
-        intent.putExtra("teacherId", tutorId);
+        intent.putExtra("tutorId", tutorId);
         intent.putExtra("email", tutorEmail);
         intent.putExtra("password", tutorPassword);
         startActivity(intent);

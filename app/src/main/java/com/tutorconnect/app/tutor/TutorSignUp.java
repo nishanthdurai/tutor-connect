@@ -91,7 +91,7 @@ public class TutorSignUp extends AppCompatActivity {
 
     }
 
-    private void verifyEmailExistence(String email, String password) {
+    private void verifyEmailExistenceAndCreateTutorAccount(String email, String password) {
         progressDialog.setMessage("Creating your Account....");
         progressDialog.setTitle("Creating");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -164,7 +164,7 @@ public class TutorSignUp extends AppCompatActivity {
             et_confirmPassword.setError("Password doesn't matches");
             return;
         } else {
-            verifyEmailExistence(email, password);
+            verifyEmailExistenceAndCreateTutorAccount(email, password);
         }
     }
 

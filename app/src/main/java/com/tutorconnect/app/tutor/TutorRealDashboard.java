@@ -20,7 +20,7 @@ public class TutorRealDashboard extends AppCompatActivity {
 
     Intent intent;
 
-    String userId, email, password;
+    String tutorId, email, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class TutorRealDashboard extends AppCompatActivity {
 
         intent = getIntent();
         email = intent.getStringExtra("email");
-        userId = intent.getStringExtra("userId");
+        tutorId = intent.getStringExtra("tutorId");
         password = intent.getStringExtra("password");
 
         btn_viewStudents.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +52,7 @@ public class TutorRealDashboard extends AppCompatActivity {
                 Intent intent = new Intent(TutorRealDashboard.this, TutorDashboard.class);
                 intent.putExtra("email", email);
                 intent.putExtra("password", password);
+                intent.putExtra("tutorId", tutorId);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -61,7 +62,7 @@ public class TutorRealDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TutorRealDashboard.this, AddNotes.class);
-                intent.putExtra("userId", userId);
+                intent.putExtra("userId", tutorId);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -70,7 +71,7 @@ public class TutorRealDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TutorRealDashboard.this, uploadAssignment.class);
-                intent.putExtra("userId", userId);
+                intent.putExtra("userId", tutorId);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -79,7 +80,7 @@ public class TutorRealDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TutorRealDashboard.this, ViewNotes.class);
-                intent.putExtra("userId", userId);
+                intent.putExtra("userId", tutorId);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }

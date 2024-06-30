@@ -39,14 +39,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
     private String studentRemarks="0/10";
     private String studentAttendance="absent";
     private final String tutorId;
-    private final String tutorEmail;
 
     private final ProgressDialog progressDialog;
 
     public StudentAdapter(Context mContext, List<StudentTutor> studentList, String tutorEmail, String tutorId) {
         this.mContext = mContext;
         this.studentList = studentList;
-        this.tutorEmail = tutorEmail;
         this.tutorId = tutorId;
         progressDialog = new ProgressDialog(mContext);
     }
@@ -104,6 +102,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
                 Intent intent = new Intent(mContext, ViewParent.class);
                 intent.putExtra("tutorId", tutorId);
                 intent.putExtra("studentId", model.getId());
+                intent.putExtra("studentName", model.getName());
                 mContext.startActivity(intent);
             }
         });

@@ -3,6 +3,9 @@ package com.tutorconnect.app.tutor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -41,9 +44,7 @@ public class ViewParent extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.view_parents);
-
-        setTitle("Parent - " + studentName);
+        setContentView(R.layout.activity_view_parent);
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
@@ -60,14 +61,19 @@ public class ViewParent extends AppCompatActivity {
         studentId = intent.getStringExtra("studentId");
         studentName = intent.getStringExtra("studentName");
 
+        setTitle("Parent - " + studentName);
+
         dbReference = FirebaseDatabase.getInstance().getReference();
 
         getAllParents();
     }
 
     private void getAllParents() {
+
+        String compositeKey = tutorId + "_" + studentId;
+
         Query emailQuery = dbReference.child("parents")
-                .orderByChild("studentId").equalTo(studentId);
+                .orderByChild("compositeKey").equalTo(compositeKey);
 
         emailQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -86,5 +92,36 @@ public class ViewParent extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void onClickAddNewParent() {
+        Intent intent = new Intent(ViewParent.this, AddParent.class);
+        intent.putExtra("tutorId", tutorId);
+        intent.putExtra("studentId", studentId);
+        intent.putExtra("studentName", studentName);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            // Handle the back button action
+            onBackPressed();
+            return true;
+        } else if (id == R.id.add_new_student) {
+            onClickAddNewParent();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.tutor_dashboard_menu, menu);
+        return true;
     }
 }

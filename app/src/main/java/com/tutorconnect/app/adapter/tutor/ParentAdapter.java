@@ -21,14 +21,12 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.viewHolder
 
     private final Context mContext;
     private List<ParentTutor> parentList;
-    private final String tutorId;
 
     private final ProgressDialog progressDialog;
 
     public ParentAdapter(Context mContext, List<ParentTutor> parentList, String tutorId) {
         this.mContext = mContext;
         this.parentList = parentList;
-        this.tutorId = tutorId;
         progressDialog = new ProgressDialog(mContext);
     }
 

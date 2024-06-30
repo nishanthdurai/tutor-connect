@@ -7,32 +7,23 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <LinearLayout
-        android:id="@+id/ll_groupCSE"
+    <TextView
+        android:id="@+id/tv_parent_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:text="Parent name"
+        android:textColor="@color/textColor"
+        android:textFontWeight="700"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/tv_parent_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Parent name"
-            android:textColor="@color/textColor"
-            android:textFontWeight="700"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/btn_remove_parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:backgroundTint="@android:color/holo_red_light"
-            android:text="Remove"
-            android:textAllCaps="false"
-            android:textSize="12sp" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/btn_remove_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:text="Remove"
+        android:textAllCaps="false"
+        android:textSize="12sp" />
 
 </LinearLayout>

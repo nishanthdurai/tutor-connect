@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".tutor.AddParent">
@@ -43,7 +42,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/et_username"
+                android:id="@+id/parent_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -75,24 +74,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="Confirm Password"
-                android:textColor="@color/textColor"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/et_subject"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:hint="Subject"
-                android:textColor="@color/textColor"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/et_child"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:hint="Child"
                 android:textColor="@color/textColor"
                 android:textSize="16sp" />
 
