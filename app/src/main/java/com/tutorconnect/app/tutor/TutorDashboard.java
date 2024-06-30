@@ -31,7 +31,7 @@ public class TutorDashboard extends AppCompatActivity {
 
     String tutorEmail = "";
     String tutorPassword = "";
-    String tutorKey = "";
+    String tutorId = "";
 
     DatabaseReference dbReference;
 
@@ -59,17 +59,16 @@ public class TutorDashboard extends AppCompatActivity {
         intent = getIntent();
         tutorEmail = intent.getStringExtra("email");
         tutorPassword = intent.getStringExtra("password");
-        tutorKey = intent.getStringExtra("tutorId");
+        tutorId = intent.getStringExtra("tutorId");
 
         dbReference = FirebaseDatabase.getInstance().getReference();
 
         getAllStudent();
-
     }
 
     private void onClickAddNewStudent() {
         Intent intent = new Intent(TutorDashboard.this, AddStudent.class);
-        intent.putExtra("teacherId", tutorKey);
+        intent.putExtra("teacherId", tutorId);
         intent.putExtra("email", tutorEmail);
         intent.putExtra("password", tutorPassword);
         startActivity(intent);
@@ -77,7 +76,7 @@ public class TutorDashboard extends AppCompatActivity {
 
     private void getAllStudent() {
         Query emailQuery = dbReference.child("students")
-                .orderByChild("tutorId").equalTo(tutorKey);
+                .orderByChild("tutorId").equalTo(tutorId);
 
         emailQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -88,7 +87,7 @@ public class TutorDashboard extends AppCompatActivity {
                     Log.d("TAG", "onDataChange: " + model.getName());
                     mList.add(model);
                 }
-                mAdapter = new StudentAdapter(TutorDashboard.this, mList);
+                mAdapter = new StudentAdapter(TutorDashboard.this, mList, tutorEmail, tutorId);
                 recyclerView.setAdapter(mAdapter);
             }
 

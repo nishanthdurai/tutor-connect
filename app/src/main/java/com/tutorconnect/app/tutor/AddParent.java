@@ -33,7 +33,7 @@ public class AddParent extends AppCompatActivity {
     DatabaseReference dbReference;
 
     Intent intent;
-    String tutorKey ="";
+    String tutorId ="";
     String teacherEmail="";
     String teacherPassword="";
 
@@ -61,7 +61,7 @@ public class AddParent extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         intent = getIntent();
-        tutorKey = intent.getStringExtra("teacherId");
+        tutorId = intent.getStringExtra("teacherId");
         teacherEmail = intent.getStringExtra("email");
         teacherPassword = intent.getStringExtra("password");
 

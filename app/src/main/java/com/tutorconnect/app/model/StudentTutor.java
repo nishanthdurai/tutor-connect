@@ -5,7 +5,7 @@ public class StudentTutor {
     private String subject;
     private String email;
     private String password;
-    private String key;
+    private String id;
     private String tutorId;
 
     public String getName() {
@@ -36,11 +36,11 @@ public class StudentTutor {
         this.password = password;
     }
 
-    public String getKey() {
-        return key;
+    public String getId() {
+        return id;
     }
-    public void setKey(String password) {
-        this.key = key;
+    public void setId(String password) {
+        this.id = id;
     }
 
     public String getTutorId() {
@@ -54,12 +54,12 @@ public class StudentTutor {
     public StudentTutor() {
     }
 
-    public StudentTutor(String name, String subject, String email, String password, String key, String tutorId) {
+    public StudentTutor(String name, String subject, String email, String password, String id, String tutorId) {
         this.name = name;
         this.subject = subject;
         this.email = email;
         this.password = password;
-        this.key = key;
+        this.id = id;
         this.tutorId = tutorId;
     }
 }

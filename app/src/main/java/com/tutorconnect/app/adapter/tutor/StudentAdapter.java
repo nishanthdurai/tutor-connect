@@ -3,6 +3,7 @@ package com.tutorconnect.app.adapter.tutor;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,24 +26,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.model.StudentTutor;
 import com.tutorconnect.app.tutor.TutorSignUp;
+import com.tutorconnect.app.tutor.ViewParent;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHolder> {
 
     private final Context mContext;
-    private List<StudentTutor> mList = new ArrayList<>();
+    private List<StudentTutor> studentList;
     private String studentRemarks="0/10";
     private String studentAttendance="absent";
+    private final String tutorId;
+    private final String tutorEmail;
 
     private final ProgressDialog progressDialog;
 
-    public StudentAdapter(Context mContext, List<StudentTutor> mList) {
+    public StudentAdapter(Context mContext, List<StudentTutor> studentList, String tutorEmail, String tutorId) {
         this.mContext = mContext;
-        this.mList = mList;
+        this.studentList = studentList;
+        this.tutorEmail = tutorEmail;
+        this.tutorId = tutorId;
         progressDialog = new ProgressDialog(mContext);
     }
 
@@ -56,7 +61,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
-        StudentTutor model = mList.get(position);
+        StudentTutor model = studentList.get(position);
         holder.tv_studentName.setText(model.getName());
         holder.tv_studentSubject.setText(model.getSubject());
         LocalDate currentDate = LocalDate.now();
@@ -90,7 +95,16 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
                 progressDialog.setTitle("Attendance....");
                 progressDialog.show();
                 createDialog(model, date);
+            }
+        });
 
+        holder.btn_view_parents.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ViewParent.class);
+                intent.putExtra("tutorId", tutorId);
+                intent.putExtra("studentId", model.getId());
+                mContext.startActivity(intent);
             }
         });
     }
@@ -175,7 +189,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return studentList.size();
     }
 
     class viewHolder extends RecyclerView.ViewHolder {
@@ -186,6 +200,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
         private Button btn_present;
         private Button btn_absent;
         private Button btn_remarks;
+        private Button btn_view_parents;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
@@ -196,6 +211,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
             btn_present = itemView.findViewById(R.id.btn_present);
             btn_absent = itemView.findViewById(R.id.btn_absent);
             btn_remarks = itemView.findViewById(R.id.btn_remarks);
+            btn_view_parents = itemView.findViewById(R.id.btn_view_parents);
         }
     }
 

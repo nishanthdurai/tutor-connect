@@ -3,7 +3,7 @@ package com.tutorconnect.app.model;
 public class Tutor {
     private String email;
     private String password;
-    private String key;
+    private String id;
 
 
     public String getEmail() {
@@ -13,17 +13,17 @@ public class Tutor {
     public String getPassword() {
         return password;
     }
-    public String getKey() {
-        return key;
+    public String getId() {
+        return id;
     }
 
     public Tutor() {
     }
 
-    public Tutor(String email, String password, String key) {
+    public Tutor(String email, String password, String id) {
         this.email = email;
         this.password = password;
-        this.key = key;
+        this.id = id;
     }
 
     public String toString() {

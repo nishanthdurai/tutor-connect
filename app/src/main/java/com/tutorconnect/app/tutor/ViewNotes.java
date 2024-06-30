@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tutorconnect.app.model.NotesModel;
+import com.tutorconnect.app.model.Notes;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.adapter.viewNotesAdapter;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class ViewNotes extends AppCompatActivity {
 
-    ArrayList<NotesModel> arrayList = new ArrayList<>();
+    ArrayList<Notes> arrayList = new ArrayList<>();
     viewNotesAdapter adapter;
     RecyclerView rv_viewnotes;
 
@@ -59,7 +59,7 @@ public class ViewNotes extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     arrayList.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        NotesModel model = dataSnapshot.getValue(NotesModel.class);
+                        Notes model = dataSnapshot.getValue(Notes.class);
                         Log.d("TAG1", "onDataChange: " + model);
                         arrayList.add(model);
                     }

@@ -101,9 +101,9 @@ public class AddStudent extends AppCompatActivity {
                     Toast.makeText(AddStudent.this, "Student with the same email already exists.", Toast.LENGTH_SHORT).show();
                 } else {
                     // create new record for user in firebase-realtime-database
-                    String key = UUID.randomUUID().toString();
-                    StudentTutor tutor = new StudentTutor(name, subject, email, password, key, tutorId);
-                    dbInstance.child("students").child(key).setValue(tutor).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    String id = UUID.randomUUID().toString();
+                    StudentTutor tutor = new StudentTutor(name, subject, email, password, id, tutorId);
+                    dbInstance.child("students").child(id).setValue(tutor).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             progressDialog.dismiss();

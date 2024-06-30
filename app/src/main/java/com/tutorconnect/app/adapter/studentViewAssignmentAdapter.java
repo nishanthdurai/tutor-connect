@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tutorconnect.app.model.NotesModel;
+import com.tutorconnect.app.model.Notes;
 import com.tutorconnect.app.R;
 
 import java.util.ArrayList;
@@ -27,11 +27,11 @@ import java.util.HashMap;
 
 public class studentViewAssignmentAdapter extends RecyclerView.Adapter<studentViewAssignmentAdapter.viewholder> {
     Context context;
-    ArrayList<NotesModel> viewNotes;
+    ArrayList<Notes> viewNotes;
     private ProgressDialog progressDialog;
     String studentName = "";
 
-    public studentViewAssignmentAdapter(Context context, ArrayList<NotesModel> viewNotes, String studentName) {
+    public studentViewAssignmentAdapter(Context context, ArrayList<Notes> viewNotes, String studentName) {
         this.context = context;
         this.viewNotes = viewNotes;
         progressDialog = new ProgressDialog(context);
@@ -47,7 +47,7 @@ public class studentViewAssignmentAdapter extends RecyclerView.Adapter<studentVi
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
-        NotesModel notes = viewNotes.get(position);
+        Notes notes = viewNotes.get(position);
         Log.d("TAG1", "onBindViewHolder: " + notes);
         holder.textView.setText(notes.getName());
         holder.btn_markAsDone.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,7 @@ public class studentViewAssignmentAdapter extends RecyclerView.Adapter<studentVi
         });
     }
 
-    private void markAsDone(NotesModel model) {
+    private void markAsDone(Notes model) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = firebaseUser.getUid();
 

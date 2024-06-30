@@ -1,6 +1,6 @@
 package com.tutorconnect.app.model;
 
-public class NotesModel {
+public class Notes {
     String name, url;
 
     public String getName() {
@@ -19,10 +19,10 @@ public class NotesModel {
         this.url = url;
     }
 
-    public NotesModel() {
+    public Notes() {
     }
 
-    public NotesModel(String name, String url) {
+    public Notes(String name, String url) {
         this.name = name;
         this.url = url;
     }

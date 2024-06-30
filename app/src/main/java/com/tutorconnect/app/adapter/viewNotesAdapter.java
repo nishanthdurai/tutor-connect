@@ -10,16 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tutorconnect.app.model.NotesModel;
+import com.tutorconnect.app.model.Notes;
 import com.tutorconnect.app.R;
 
 import java.util.ArrayList;
 
 public class viewNotesAdapter extends RecyclerView.Adapter<viewNotesAdapter.viewholder> {
     Context context;
-    ArrayList<NotesModel> viewNotes;
+    ArrayList<Notes> viewNotes;
 
-    public viewNotesAdapter(Context context, ArrayList<NotesModel> viewNotes) {
+    public viewNotesAdapter(Context context, ArrayList<Notes> viewNotes) {
         this.context = context;
         this.viewNotes = viewNotes;
     }
@@ -33,7 +33,7 @@ public class viewNotesAdapter extends RecyclerView.Adapter<viewNotesAdapter.view
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
-        NotesModel notes = viewNotes.get(position);
+        Notes notes = viewNotes.get(position);
         Log.d("TAG1", "onBindViewHolder: "  + notes);
         holder.textView.setText(notes.getName());
     }

@@ -122,7 +122,7 @@ public class TutorSignIn extends AppCompatActivity {
                             if (tutor != null && password.equals(tutor.getPassword())) {
                                 // check if password is valid
                                 Toast.makeText(TutorSignIn.this, "SignIn success.", Toast.LENGTH_SHORT).show();
-                                sendUserToMainActivity(tutor.getKey(), tutor.getEmail(), tutor.getPassword());
+                                sendUserToMainActivity(tutor.getId(), tutor.getEmail(), tutor.getPassword());
                                 return; // Exit once a match is found
                             }
                         }
