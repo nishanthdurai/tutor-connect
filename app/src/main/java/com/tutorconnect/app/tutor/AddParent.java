@@ -24,14 +24,15 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.model.ParentTutor;
-import com.tutorconnect.app.model.Tutor;
 
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class AddParent extends AppCompatActivity {
 
-    EditText et_email, et_password, et_confirmPassword, et_name;
+    private static final String defaultParentPassword = "password";
+
+    EditText et_email, et_name;
     Button btn_Register;
 
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
@@ -70,8 +71,6 @@ public class AddParent extends AppCompatActivity {
 
         et_name = findViewById(R.id.parent_name);
         et_email = findViewById(R.id.et_email);
-        et_password = findViewById(R.id.et_password);
-        et_confirmPassword = findViewById(R.id.et_confirmPassword);
         btn_Register = findViewById(R.id.btn_register);
 
         progressDialog = new ProgressDialog(this);
@@ -89,8 +88,6 @@ public class AddParent extends AppCompatActivity {
 
     private void PerformAuth() {
         String email = et_email.getText().toString();
-        String password = et_password.getText().toString();
-        String confirmPassword = et_confirmPassword.getText().toString();
         String name = et_name.getText().toString();
 
         if (name.isEmpty()) {
@@ -102,22 +99,13 @@ public class AddParent extends AppCompatActivity {
         } else if (!pat.matcher(email).matches()) {
             et_email.setError("Please Enter a valid Email");
             return;
-        } else if (password.isEmpty()) {
-            et_password.setError("Please input Password");
-            return;
-        } else if (password.length() < 6) {
-            et_password.setError("Password too short");
-            return;
-        } else if (!confirmPassword.equals(password)) {
-            et_confirmPassword.setError("Password doesn't matches");
-            return;
         } else {
-            verifyEmailExistenceAndAddParent(name, email, password, tutorId, studentId);
+            verifyEmailExistenceAndAddParent(name, email, tutorId, studentId);
         }
     }
 
     private void verifyEmailExistenceAndAddParent(String name, String email,
-                                                  String password, String tutorId, String studentId) {
+                                                  String tutorId, String studentId) {
         progressDialog.setMessage("Adding parent....");
         progressDialog.setTitle("Adding");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -144,7 +132,7 @@ public class AddParent extends AppCompatActivity {
                 if (compositeKeyFound) {
                     Toast.makeText(AddParent.this, "Parent with the same email exists.", Toast.LENGTH_SHORT).show();
                 } else {
-                    addNewParent(name, email, password);
+                    addNewParent(name, email);
                 }
             }
 
@@ -158,11 +146,11 @@ public class AddParent extends AppCompatActivity {
         });
     }
 
-    private void addNewParent(String name, String email, String password) {
+    private void addNewParent(String name, String email) {
         // create new record for user in firebase-realtime-database
         String id = UUID.randomUUID().toString();
         String compositeKey = tutorId + "_" + studentId;
-        ParentTutor tutor = new ParentTutor(name, email, password, id, studentId, tutorId, compositeKey);
+        ParentTutor tutor = new ParentTutor(name, email, defaultParentPassword, id, studentId, tutorId, compositeKey, true);
         dbReference.child("parents").child(id).setValue(tutor)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override

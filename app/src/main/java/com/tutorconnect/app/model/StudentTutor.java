@@ -7,6 +7,7 @@ public class StudentTutor {
     private String password;
     private String id;
     private String tutorId;
+    private Boolean requirePasswordChange;
 
     public String getName() {
         return name;
@@ -60,12 +61,21 @@ public class StudentTutor {
     public StudentTutor() {
     }
 
-    public StudentTutor(String name, String subject, String email, String password, String id, String tutorId) {
+    public StudentTutor(String name, String subject, String email, String password, String id, String tutorId, boolean requirePasswordChange) {
         this.name = name;
         this.subject = subject;
         this.email = email;
         this.password = password;
         this.id = id;
         this.tutorId = tutorId;
+        this.requirePasswordChange = requirePasswordChange;
+    }
+
+    public boolean getRequirePasswordChange() {
+        return requirePasswordChange;
+    }
+
+    public void setRequirePasswordChange(boolean requirePasswordChange) {
+        this.requirePasswordChange = requirePasswordChange;
     }
 }

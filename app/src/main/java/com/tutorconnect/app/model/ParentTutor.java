@@ -7,17 +7,17 @@ public class ParentTutor {
     private String tutorId;
     private String email;
     private String password;
+    private Boolean requirePasswordChange;
     private String compositeKey; // used to filter the parent with student and tutor,
     // Eg: ejfbvjebrvfbev_dkjcbkjbkcjbd, as firebase doesn't support query with multiple field,
     // composite method can be used..!
 
 
     public ParentTutor() {
-
     }
 
     public ParentTutor(String name, String email, String password, String id,
-                       String studentId, String tutorId, String compositeKey) {
+                       String studentId, String tutorId, String compositeKey, boolean requirePasswordChange) {
         this.name = name;
         this.id = id;
         this.studentId = studentId;
@@ -25,6 +25,7 @@ public class ParentTutor {
         this.email = email;
         this.password = password;
         this.compositeKey = compositeKey;
+        this.requirePasswordChange = requirePasswordChange;
     }
 
     public String getName() {
@@ -81,5 +82,13 @@ public class ParentTutor {
 
     public void setCompositeKey(String compositeKey) {
         this.compositeKey = compositeKey;
+    }
+
+    public Boolean getRequirePasswordChange() {
+        return requirePasswordChange;
+    }
+
+    public void setRequirePasswordChange(Boolean requirePasswordChange) {
+        this.requirePasswordChange = requirePasswordChange;
     }
 }

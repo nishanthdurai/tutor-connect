@@ -30,7 +30,9 @@ import java.util.regex.Pattern;
 
 public class AddStudent extends AppCompatActivity {
 
-    EditText et_email, et_password, et_confirmPassword, et_name, et_subject;
+    private static final String defaultStudentPassword = "password";
+
+    EditText et_email, et_name, et_subject;
     Button btn_Register;
 
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
@@ -64,9 +66,7 @@ public class AddStudent extends AppCompatActivity {
 
         et_name = findViewById(R.id.parent_name);
         et_email = findViewById(R.id.et_email);
-        et_password = findViewById(R.id.et_password);
         et_subject = findViewById(R.id.et_subject);
-        et_confirmPassword = findViewById(R.id.et_confirmPassword);
         btn_Register = findViewById(R.id.btn_register);
 
         progressDialog = new ProgressDialog(this);
@@ -86,7 +86,7 @@ public class AddStudent extends AppCompatActivity {
         });
     }
 
-    private void validateEmailExistenceAndAddStudent(String name, String email, String password, String subject) {
+    private void validateEmailExistenceAndAddStudent(String name, String email, String subject) {
         progressDialog.setMessage("Adding Student....");
         progressDialog.setTitle("Adding");
         progressDialog.setCanceledOnTouchOutside(false);
@@ -102,7 +102,7 @@ public class AddStudent extends AppCompatActivity {
                 } else {
                     // create new record for user in firebase-realtime-database
                     String id = UUID.randomUUID().toString();
-                    StudentTutor tutor = new StudentTutor(name, subject, email, password, id, tutorId);
+                    StudentTutor tutor = new StudentTutor(name, subject, email, defaultStudentPassword, id, tutorId, true);
                     dbInstance.child("students").child(id).setValue(tutor).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -140,8 +140,6 @@ public class AddStudent extends AppCompatActivity {
 
     private void PerformAuth() {
         String email = et_email.getText().toString();
-        String password = et_password.getText().toString();
-        String confirmPassword = et_confirmPassword.getText().toString();
         String name = et_name.getText().toString();
         String subject = et_subject.getText().toString();
 
@@ -154,20 +152,11 @@ public class AddStudent extends AppCompatActivity {
         } else if (!pat.matcher(email).matches()) {
             et_email.setError("Please Enter a valid Email");
             return;
-        } else if (password.isEmpty()) {
-            et_password.setError("Please input Password");
-            return;
-        } else if (password.length() < 6) {
-            et_password.setError("Password too short");
-            return;
-        } else if (!confirmPassword.equals(password)) {
-            et_confirmPassword.setError("Password doesn't matches");
-            return;
         } else if (subject.isEmpty()) {
             et_subject.setError("Please Enter Subject");
             return;
         } else {
-            validateEmailExistenceAndAddStudent(name, email, password, subject);
+            validateEmailExistenceAndAddStudent(name, email, subject);
         }
     }
 
