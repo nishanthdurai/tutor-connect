@@ -50,7 +50,7 @@ public class TutorSignUp extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    DatabaseReference dbInstance;
+    DatabaseReference dbReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,7 @@ public class TutorSignUp extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        dbInstance = FirebaseDatabase.getInstance().getReference();
+        dbReference = FirebaseDatabase.getInstance().getReference();
 
         tv_loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class TutorSignUp extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.show();
 
-        Query emailQuery = dbInstance.child("tutors").orderByChild("email").equalTo(email);
+        Query emailQuery = dbReference.child("tutors").orderByChild("email").equalTo(email);
         emailQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -108,7 +108,7 @@ public class TutorSignUp extends AppCompatActivity {
                     // create new record for user in firebase-realtime-database
                     String key = UUID.randomUUID().toString();
                     Tutor tutor = new Tutor(email, password, key);
-                    dbInstance.child("tutors").child(key).setValue(tutor).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    dbReference.child("tutors").child(key).setValue(tutor).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             progressDialog.dismiss();
@@ -168,6 +168,7 @@ public class TutorSignUp extends AppCompatActivity {
         }
     }
 
+/*
     private void sendUserToMainActivity(String userId, String email, String password) {
         Intent intent = new Intent(TutorSignUp.this, TutorRealDashboard.class);
         intent.putExtra("email", email);
@@ -176,6 +177,7 @@ public class TutorSignUp extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
+*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -35,16 +35,14 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
 
     private final Context mContext;
     private List<StudentTutor> mList = new ArrayList<>();
-    private String teacherId = "";
     private String studentRemarks="0/10";
     private String studentAttendance="absent";
 
     private final ProgressDialog progressDialog;
 
-    public StudentAdapter(Context mContext, List<StudentTutor> mList, String teacherId) {
+    public StudentAdapter(Context mContext, List<StudentTutor> mList) {
         this.mContext = mContext;
         this.mList = mList;
-        this.teacherId = teacherId;
         progressDialog = new ProgressDialog(mContext);
     }
 
@@ -59,8 +57,8 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
     @Override
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         StudentTutor model = mList.get(position);
-        holder.tv_studentName.setText(model.getStudentName());
-        holder.tv_studentSubject.setText(model.getStudentSubject());
+        holder.tv_studentName.setText(model.getName());
+        holder.tv_studentSubject.setText(model.getSubject());
         LocalDate currentDate = LocalDate.now();
         String date = currentDate.toString();
         holder.tv_todayDate.setText(date);
@@ -153,12 +151,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         String userId = firebaseUser.getUid();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.ATTENDANCE).child(model.getStudentName()).child(date);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.ATTENDANCE).child(model.getName()).child(date);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("id", userId);
-        hashMap.put("studentName", model.getStudentName());
-        hashMap.put("email", model.getStudentEmail());
-        hashMap.put("studentSubject", model.getStudentSubject());
+        hashMap.put("studentName", model.getName());
+        hashMap.put("email", model.getEmail());
+        hashMap.put("studentSubject", model.getSubject());
         hashMap.put("present", studentAttendance);
         hashMap.put("remarks", studentRemarks);
         hashMap.put("date", date);
