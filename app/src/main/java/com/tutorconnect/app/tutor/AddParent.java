@@ -60,7 +60,7 @@ public class AddParent extends AppCompatActivity {
         studentId = intent.getStringExtra("studentId");
         studentName = intent.getStringExtra("studentName");
 
-        setTitle("Add parent - " + tutorId);
+        setTitle("Add parent - " + studentName);
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
