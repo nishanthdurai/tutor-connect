@@ -24,7 +24,7 @@ public class StudentRealDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_real_dashboard);
 
-        setTitle("Student");
+        setTitle("Dashboard");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {

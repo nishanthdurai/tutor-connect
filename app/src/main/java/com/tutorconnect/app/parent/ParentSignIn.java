@@ -1,4 +1,4 @@
-package com.tutorconnect.app.student;
+package com.tutorconnect.app.parent;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,12 +21,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tutorconnect.app.R;
-import com.tutorconnect.app.model.StudentTutor;
+import com.tutorconnect.app.model.ParentTutor;
+import com.tutorconnect.app.student.ParentPasswordChangeActivity;
 
 import java.util.regex.Pattern;
 
-public class StudentSignin extends AppCompatActivity {
-
+public class ParentSignIn extends AppCompatActivity {
     EditText et_email, et_password;
     Button btn_login;
 
@@ -37,41 +37,41 @@ public class StudentSignin extends AppCompatActivity {
             "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
             "A-Z]{2,7}$";
 
-    DatabaseReference dbInstance;
-
     Pattern pat = Pattern.compile(emailRegex);
 
     ProgressDialog progressDialog;
 
+    DatabaseReference dbReference;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_signin);
+        setContentView(R.layout.activity_parent_signin);
 
-        setTitle("Student");
+        setTitle("Parent");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        ;
 
         et_email = findViewById(R.id.et_email);
         et_password = findViewById(R.id.et_password);
         btn_login = findViewById(R.id.btn_login);
         tv_forgotPassword = findViewById(R.id.tv_forgotPassword);
 
+        dbReference = FirebaseDatabase.getInstance().getReference();
+
         tv_forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(StudentSignin.this, StudentResetPasswordActivity.class));
+                startActivity(new Intent(ParentSignIn.this, ParentResetPasswordActivity.class));
             }
         });
 
         progressDialog = new ProgressDialog(this);
-
-        dbInstance = FirebaseDatabase.getInstance().getReference();
 
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,24 +105,24 @@ public class StudentSignin extends AppCompatActivity {
             progressDialog.show();
 
             // validate credentials with email and password
-            Query emailQuery = dbInstance.child("students").orderByChild("email").equalTo(email);
+            Query emailQuery = dbReference.child("parents").orderByChild("email").equalTo(email);
             emailQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     progressDialog.dismiss();
                     if (dataSnapshot.exists()) {
                         for (DataSnapshot tutorSnapshot : dataSnapshot.getChildren()) {
-                            StudentTutor student = tutorSnapshot.getValue(StudentTutor.class);
-                            if (student != null && password.equals(student.getPassword())) {
+                            ParentTutor parent = tutorSnapshot.getValue(ParentTutor.class);
+                            if (parent != null && password.equals(parent.getPassword())) {
                                 // check if password is valid
-                                Toast.makeText(StudentSignin.this, "SignIn success.", Toast.LENGTH_SHORT).show();
-                                sendUserToMainActivity(student);
+                                Toast.makeText(ParentSignIn.this, "SignIn success.", Toast.LENGTH_SHORT).show();
+                                sendUserToMainActivity(parent);
                                 return; // Exit once a match is found
                             }
                         }
-                        Toast.makeText(StudentSignin.this, "Invalid password..!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ParentSignIn.this, "Invalid password..!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(StudentSignin.this, "Email is not registered..!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ParentSignIn.this, "Email is not registered..!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -130,21 +130,19 @@ public class StudentSignin extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                     progressDialog.dismiss();
                     Log.e("Firebase", "Database error", databaseError.toException());
-                    Toast.makeText(StudentSignin.this, "Error validating credentials, " + "try again later..!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ParentSignIn.this, "Error validating credentials, " + "try again later..!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    // if password change required send student to password update screen
-    private void sendUserToMainActivity(StudentTutor student) {
-        Class<? extends AppCompatActivity> targetActivity = student.getRequirePasswordChange() ?
-                StudentPasswordChangeActivity.class : StudentRealDashboard.class;
+    private void sendUserToMainActivity(ParentTutor parent) {
+        Class<? extends AppCompatActivity> targetActivity = parent.getRequirePasswordChange() ?
+                ParentPasswordChangeActivity.class : ParentDashboard.class;
 
-        Intent intent = new Intent(StudentSignin.this, targetActivity);
-        intent.putExtra("studentName", student.getName());
-        intent.putExtra("studentId", student.getId());
-        intent.putExtra("tutorId", student.getTutorId());
+        Intent intent = new Intent(ParentSignIn.this, targetActivity);
+        intent.putExtra("parentId", parent.getId());
+        intent.putExtra("parentName", parent.getName());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
@@ -157,5 +155,4 @@ public class StudentSignin extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

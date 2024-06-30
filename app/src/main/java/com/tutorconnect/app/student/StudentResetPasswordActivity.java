@@ -52,7 +52,7 @@ public class StudentResetPasswordActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(StudentResetPasswordActivity.this, "Please Check Your Email", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(StudentResetPasswordActivity.this, StudentSignin.class));
+                                startActivity(new Intent(StudentResetPasswordActivity.this, StudentSignIn.class));
                             } else {
                                 String error = task.getException().getMessage();
                                 Toast.makeText(StudentResetPasswordActivity.this, error, Toast.LENGTH_SHORT).show();

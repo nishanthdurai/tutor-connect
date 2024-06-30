@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.tutorconnect.app.parent.ParentSignin;
-import com.tutorconnect.app.student.StudentSignin;
+import com.tutorconnect.app.parent.ParentSignIn;
+import com.tutorconnect.app.student.StudentSignIn;
 import com.tutorconnect.app.tutor.TutorSignIn;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
         btn_tutor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TutorSignIn.class)));
 
-        btn_student.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, StudentSignin.class)));
+        btn_student.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, StudentSignIn.class)));
 
-        btn_parent.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ParentSignin.class)));
+        btn_parent.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ParentSignIn.class)));
 
 
     }

@@ -51,7 +51,7 @@ public class ParentResetPasswordActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
                                 Toast.makeText(ParentResetPasswordActivity.this, "Please Check Your Email", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(ParentResetPasswordActivity.this, ParentSignin.class));
+                                startActivity(new Intent(ParentResetPasswordActivity.this, ParentSignIn.class));
                             }else{
                                 String error = task.getException().getMessage();
                                 Toast.makeText(ParentResetPasswordActivity.this, error, Toast.LENGTH_SHORT).show();

@@ -21,6 +21,9 @@
         android:theme="@style/Theme.TutorConnect"
         tools:targetApi="31">
         <activity
+            android:name=".student.ParentPasswordChangeActivity"
+            android:exported="false" />
+        <activity
             android:name=".student.StudentPasswordChangeActivity"
             android:exported="false" />
         <activity
@@ -72,10 +75,10 @@
             android:name=".student.StudentDashboard"
             android:exported="true" />
         <activity
-            android:name=".parent.ParentSignin"
+            android:name=".parent.ParentSignIn"
             android:exported="true" />
         <activity
-            android:name=".student.StudentSignin"
+            android:name=".student.StudentSignIn"
             android:exported="true" />
         <activity
             android:name=".tutor.TutorDashboard"

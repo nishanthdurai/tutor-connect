@@ -30,14 +30,14 @@ public class ParentDashboard extends AppCompatActivity {
     RecyclerView recyclerView;
     StudentAdapter mAdapter;
     Intent intent;
-    String childName = "";
+    String parentName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_dashboard);
 
-        setTitle("Parent");
+        setTitle("Dashboard");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
@@ -50,7 +50,7 @@ public class ParentDashboard extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         intent = getIntent();
-        childName = intent.getStringExtra("childName");
+        parentName = intent.getStringExtra("parentName");
 
         getAllAttendance();
 
@@ -59,7 +59,7 @@ public class ParentDashboard extends AppCompatActivity {
     private void getAllAttendance() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser.getUid() != null) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.ATTENDANCE).child(childName);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.ATTENDANCE).child(parentName);
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -82,13 +82,10 @@ public class ParentDashboard extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // Handle the back button action
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {// Handle the back button action
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 }

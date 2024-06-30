@@ -8,20 +8,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tutorconnect.app.R;
+import com.tutorconnect.app.parent.ParentDashboard;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class StudentPasswordChangeActivity extends AppCompatActivity {
+public class ParentPasswordChangeActivity extends AppCompatActivity {
 
     EditText et_confirm_password, et_password;
     Button btn_change_password;
@@ -32,14 +29,13 @@ public class StudentPasswordChangeActivity extends AppCompatActivity {
 
     Intent intent;
 
-    String studentName = "";
-    String studentId = "";
-    String tutorId = "";
+    String parentName = "";
+    String parentId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_password_change);
+        setContentView(R.layout.activity_parent_password_change);
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
@@ -48,11 +44,10 @@ public class StudentPasswordChangeActivity extends AppCompatActivity {
         }
 
         intent = getIntent();
-        studentName = intent.getStringExtra("studentName");
-        studentId = intent.getStringExtra("studentId");
-        tutorId = intent.getStringExtra("tutorId");
+        parentName = intent.getStringExtra("parentName");
+        parentId = intent.getStringExtra("parentId");
 
-        setTitle("Welcome " + studentName);
+        setTitle("Welcome " + parentName);
 
         et_confirm_password = findViewById(R.id.et_confirm_password);
         et_password = findViewById(R.id.et_password);
@@ -99,29 +94,28 @@ public class StudentPasswordChangeActivity extends AppCompatActivity {
             userValues.put("password", password);
             userValues.put("requirePasswordChange", false);
 
-            dbReference.child("students").child(studentId).updateChildren(userValues)
+            dbReference.child("parents").child(parentId).updateChildren(userValues)
                     .addOnCompleteListener(task -> {
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
                             // Update successful
-                            Toast.makeText(StudentPasswordChangeActivity.this, "Password changed successfully.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ParentPasswordChangeActivity.this, "Password changed successfully.", Toast.LENGTH_SHORT).show();
                             onPasswordChangedSuccessfully();
                         } else {
                             // Update failed
-                            Toast.makeText(StudentPasswordChangeActivity.this, "Failed to change password, try again later", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ParentPasswordChangeActivity.this, "Failed to change password, try again later", Toast.LENGTH_SHORT).show();
                         }
                     }).addOnFailureListener(e -> {
                         progressDialog.dismiss();
-                        Toast.makeText(StudentPasswordChangeActivity.this, "Failed to change password, try again later", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ParentPasswordChangeActivity.this, "Failed to change password, try again later", Toast.LENGTH_SHORT).show();
                     });
         }
     }
 
     private void onPasswordChangedSuccessfully() {
-        Intent intent = new Intent(StudentPasswordChangeActivity.this, StudentRealDashboard.class);
-        intent.putExtra("studentName", studentName);
-        intent.putExtra("studentId", studentId);
-        intent.putExtra("tutorId", tutorId);
+        Intent intent = new Intent(ParentPasswordChangeActivity.this, ParentDashboard.class);
+        intent.putExtra("parentName", parentName);
+        intent.putExtra("parentId", parentId);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
