@@ -34,12 +34,12 @@
                     android:id="@+id/cv_viewAssignment"
                     app:cardCornerRadius="16dp"
                     android:layout_width="100dp"
-                    android:layout_height="100dp">
+                    android:layout_height="100dp"
+                    app:cardBackgroundColor="@color/primary">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grey"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -56,7 +56,7 @@
                             android:text="View Assignment"
                             android:textAlignment="center"
                             android:textColor="@color/textColor"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -75,12 +75,12 @@
                     android:id="@+id/cv_viewNotes"
                     app:cardCornerRadius="16dp"
                     android:layout_width="100dp"
-                    android:layout_height="100dp">
+                    android:layout_height="100dp"
+                    app:cardBackgroundColor="@color/primary">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grey"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -96,7 +96,7 @@
                             android:layout_marginTop="8dp"
                             android:text="View Notes"
                             android:textColor="@color/textColor"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -127,12 +127,12 @@
                     android:id="@+id/cv_uploadAssignment"
                     app:cardCornerRadius="16dp"
                     android:layout_width="100dp"
-                    android:layout_height="100dp">
+                    android:layout_height="100dp"
+                    app:cardBackgroundColor="@color/primary">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grey"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -149,7 +149,7 @@
                             android:text="Upload Assignment"
                             android:textAlignment="center"
                             android:textColor="@color/textColor"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -168,12 +168,12 @@
                     android:id="@+id/cv_uploadNotes"
                     app:cardCornerRadius="16dp"
                     android:layout_width="100dp"
-                    android:layout_height="100dp">
+                    android:layout_height="100dp"
+                    app:cardBackgroundColor="@color/primary">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grey"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -190,7 +190,7 @@
                             android:text="Upload\nNotes"
                             android:textAlignment="center"
                             android:textColor="@color/textColor"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -221,12 +221,12 @@
                     android:id="@+id/cv_viewStudents"
                     app:cardCornerRadius="16dp"
                     android:layout_width="100dp"
-                    android:layout_height="100dp">
+                    android:layout_height="100dp"
+                    app:cardBackgroundColor="@color/primary">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/grey"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -243,7 +243,7 @@
                             android:text="View Students"
                             android:textAlignment="center"
                             android:textColor="@color/textColor"
-                            android:textSize="16sp"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -275,7 +275,7 @@
     <!--            android:background="@drawable/bg_rounded_input_field"-->
     <!--            android:text="View Students"-->
     <!--            android:textAllCaps="false"-->
-    <!--            android:textColor="@color/white"-->
+    <!--            android:textColor="@color/textColor"-->
     <!--            android:textSize="16sp" />-->
 
     <!--        <Button-->
@@ -288,7 +288,7 @@
     <!--            android:background="@drawable/bg_rounded_input_field"-->
     <!--            android:text="View Assignment"-->
     <!--            android:textAllCaps="false"-->
-    <!--            android:textColor="@color/white"-->
+    <!--            android:textColor="@color/textColor"-->
     <!--            android:textSize="16sp" />-->
 
     <!--        <Button-->
@@ -301,7 +301,7 @@
     <!--            android:background="@drawable/bg_rounded_input_field"-->
     <!--            android:text="View Notes"-->
     <!--            android:textAllCaps="false"-->
-    <!--            android:textColor="@color/white"-->
+    <!--            android:textColor="@color/textColor"-->
     <!--            android:textSize="16sp" />-->
 
     <!--        <Button-->
@@ -314,7 +314,7 @@
     <!--            android:background="@drawable/bg_rounded_input_field"-->
     <!--            android:text="Upload Notes"-->
     <!--            android:textAllCaps="false"-->
-    <!--            android:textColor="@color/white"-->
+    <!--            android:textColor="@color/textColor"-->
     <!--            android:textSize="16sp" />-->
 
     <!--        <Button-->
@@ -327,7 +327,7 @@
     <!--            android:background="@drawable/bg_rounded_input_field"-->
     <!--            android:text="Upload Assignments"-->
     <!--            android:textAllCaps="false"-->
-    <!--            android:textColor="@color/white"-->
+    <!--            android:textColor="@color/textColor"-->
     <!--            android:textSize="16sp" />-->
     <!--    </LinearLayout>-->
 

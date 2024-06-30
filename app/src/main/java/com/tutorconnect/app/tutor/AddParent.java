@@ -111,66 +111,9 @@ public class AddParent extends AppCompatActivity {
             progressDialog.setTitle("Creating");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
-
-//            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                @Override
-//                public void onComplete(@NonNull Task<AuthResult> task) {
-//                    if (task.isSuccessful()) {
-//                        progressDialog.dismiss();
-//
-//                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-//                        String userId = firebaseUser.getUid();
-//
-//                        dbReference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.PARENTS_USER);
-//                        HashMap<String, String> hashMap = new HashMap<>();
-//                        hashMap.put("id", userId);
-//                        hashMap.put("username", name);
-//                        hashMap.put("email", email);
-//                        hashMap.put("password", password);
-//                        hashMap.put("subject", subject);
-//                        hashMap.put("child", child);
-//
-//                        dbReference.push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if (task.isSuccessful()) {
-//                                    loginTeacher(teacherEmail,teacherPassword);
-//                                    sendUserToMainActivity();
-//                                }
-//                            }
-//                        });
-//                        Toast.makeText(AddParent.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-//                    } else {
-//                        progressDialog.dismiss();
-//                        Log.d("TAG", "onComplete: "+ task.getException());
-//                        Toast.makeText(AddParent.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
         }
     }
 
-    private void loginTeacher(String teacherEmail, String teacherPassword) {
-//        mAuth.signInWithEmailAndPassword(teacherEmail, teacherPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()) {
-//                    sendUserToMainActivity();
-//                } else {
-//                    progressDialog.dismiss();
-//                }
-//            }
-//        });
-    }
-
-    private void sendUserToMainActivity() {
-        Intent intent = new Intent(AddParent.this, TutorDashboard.class);
-        intent.putExtra("email",teacherEmail);
-        intent.putExtra("password",teacherPassword);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
-
 
     <application
         android:allowBackup="true"
@@ -17,74 +18,75 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TutorConnectNight"
+        android:theme="@style/Theme.TutorConnect"
         tools:targetApi="31">
+        <activity
+            android:name=".MainActivity2"
+            android:exported="true" >
+        </activity>
 
         <activity
-            android:name="com.tutorconnect.app.student.StudentRealDashboard"
+            android:name=".student.StudentRealDashboard"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.student.StudentViewNotes"
+            android:name=".student.StudentViewNotes"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.student.ViewAssignment"
+            android:name=".student.ViewAssignment"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.ViewAssignment"
+            android:name=".tutor.ViewAssignment"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.ViewNotes"
+            android:name=".tutor.ViewNotes"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.uploadAssignment"
+            android:name=".tutor.uploadAssignment"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.AddNotes"
+            android:name=".tutor.AddNotes"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.TutorRealDashboard"
+            android:name=".tutor.TutorRealDashboard"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.AddParent"
+            android:name=".tutor.AddParent"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.AddStudent"
+            android:name=".tutor.AddStudent"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.AddUser"
+            android:name=".parent.ParentResetPasswordActivity"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.parent.ParentResetPasswordActivity"
+            android:name=".student.StudentResetPasswordActivity"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.student.StudentResetPasswordActivity"
+            android:name=".tutor.TutorResetPasswordActivity"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.TutorResetPasswordActivity"
+            android:name=".parent.ParentDashboard"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.parent.ParentDashboard"
+            android:name=".student.StudentDashboard"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.student.StudentDashboard"
+            android:name=".parent.ParentSignin"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.parent.ParentSignin"
+            android:name=".student.StudentSignin"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.student.StudentSignin"
+            android:name=".tutor.TutorDashboard"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.TutorDashboard"
+            android:name=".tutor.TutorSignIn"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.TutorSignIn"
+            android:name=".tutor.TutorSignUp"
             android:exported="true" />
         <activity
-            android:name="com.tutorconnect.app.tutor.TutorSignUp"
-            android:exported="true" />
-        <activity
-            android:name="com.tutorconnect.app.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

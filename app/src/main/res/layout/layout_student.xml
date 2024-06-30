@@ -1,117 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginTop="12dp"
+    android:background="@color/background3">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ll_groupCSE"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="16dp">
-
-        <RelativeLayout
-            android:id="@+id/rl_new"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/cv_studentImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/student" />
-
-            <LinearLayout
-                android:id="@+id/ll_usernameCSE"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:layout_toRightOf="@id/cv_studentImage"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_studentName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="Tutor Connect"
-                    android:textColor="@color/textColor"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/tv_studentSubject"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="Science"
-                    android:textColor="@color/textColor"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/tv_todayDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:text="29-12-2021"
-                    android:textColor="@color/textColor"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_remarks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/bg_rounded_input_field"
-                android:text="Remarks"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-
-        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/ll_new"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/rl_new"
-            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/cv_studentImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/student" />
+
+            <LinearLayout
+                android:id="@+id/ll_usernameCSE"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="0.7"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_studentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tutor Connect"
+                    android:textColor="@color/textColor"
+                    android:textFontWeight="700"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/tv_studentSubject"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Subject"
+                    android:textColor="@color/textColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_todayDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="29-12-2021"
+                    android:textColor="@color/textColor"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <Button
                 android:id="@+id/btn_present"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_rounded_input_field"
+                android:backgroundTint="@android:color/holo_green_light"
                 android:text="Present"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="12sp"
+                app:cornerRadius="2dp" />
 
             <Button
                 android:id="@+id/btn_absent"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_rounded_input_field"
                 android:text="Absent"
+                android:backgroundTint="@android:color/holo_red_light"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="12sp"
+                app:cornerRadius="2dp" />
+
+            <Button
+                android:id="@+id/btn_remarks"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:text="Remarks"
+                android:backgroundTint="@android:color/holo_orange_light"
+                android:textAllCaps="false"
+                android:textSize="12sp"
+                app:cornerRadius="2dp" />
 
         </LinearLayout>
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/btn_view_parents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:text="View Parents"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:textAllCaps="false"
+            />
 
-</RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
