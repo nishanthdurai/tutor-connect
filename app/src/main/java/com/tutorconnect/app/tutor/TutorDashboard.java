@@ -74,7 +74,7 @@ public class TutorDashboard extends AppCompatActivity {
         iv_addUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TutorDashboard.this, AddUser.class);
+                Intent intent = new Intent(TutorDashboard.this, AddStudent.class);
                 intent.putExtra("teacherId", tutorKey);
                 intent.putExtra("email", tutorEmail);
                 intent.putExtra("password", tutorPassword);

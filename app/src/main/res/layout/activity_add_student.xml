@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:text="@string/title_food_plaza"
+                android:text="@string/title_tutor_connect"
                 android:textColor="@color/textColor"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:hint="Username"
+                android:hint="Name"
                 android:textColor="@color/textColor"
                 android:textSize="16sp" />
 

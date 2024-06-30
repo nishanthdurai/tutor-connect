@@ -3,31 +3,22 @@ package com.tutorconnect.app.tutor;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tutorconnect.app.R;
 
-import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class AddParent extends AppCompatActivity {
 
-    EditText et_email, et_password, et_confirmPassword, et_username, et_subject, et_child;
+    EditText et_email, et_password, et_confirmPassword, et_name, et_subject, et_child;
     Button btn_Register;
 
     String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\." +
@@ -39,12 +30,10 @@ public class AddParent extends AppCompatActivity {
 
     ProgressDialog progressDialog;
 
-    FirebaseAuth mAuth;
-    FirebaseUser mUser;
-    DatabaseReference reference;
+    DatabaseReference dbReference;
 
     Intent intent;
-    String teacherId="";
+    String tutorKey ="";
     String teacherEmail="";
     String teacherPassword="";
 
@@ -61,7 +50,7 @@ public class AddParent extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        et_username = findViewById(R.id.et_username);
+        et_name = findViewById(R.id.et_username);
         et_email = findViewById(R.id.et_email);
         et_password = findViewById(R.id.et_password);
         et_subject = findViewById(R.id.et_subject);
@@ -72,12 +61,11 @@ public class AddParent extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         intent = getIntent();
-        teacherId = intent.getStringExtra("teacherId");
+        tutorKey = intent.getStringExtra("teacherId");
         teacherEmail = intent.getStringExtra("email");
         teacherPassword = intent.getStringExtra("password");
 
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
+        dbReference = FirebaseDatabase.getInstance().getReference();
 
         btn_Register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +80,14 @@ public class AddParent extends AppCompatActivity {
         String email = et_email.getText().toString();
         String password = et_password.getText().toString();
         String confirmPassword = et_confirmPassword.getText().toString();
-        String username = et_username.getText().toString();
+        String name = et_name.getText().toString();
         String subject = et_subject.getText().toString();
         String child = et_child.getText().toString();
 
+        if (name.isEmpty()) {
+            et_email.setError("Please Enter Name");
+            return;
+        }  else
         if (email.isEmpty()) {
             et_email.setError("Please Enter Email");
             return;
@@ -120,55 +112,55 @@ public class AddParent extends AppCompatActivity {
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        progressDialog.dismiss();
-
-                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-                        String userId = firebaseUser.getUid();
-
-                        reference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.PARENTS_USER);
-                        HashMap<String, String> hashMap = new HashMap<>();
-                        hashMap.put("id", userId);
-                        hashMap.put("username", username);
-                        hashMap.put("email", email);
-                        hashMap.put("password", password);
-                        hashMap.put("subject", subject);
-                        hashMap.put("child", child);
-
-                        reference.push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    loginTeacher(teacherEmail,teacherPassword);
-                                    sendUserToMainActivity();
-                                }
-                            }
-                        });
-                        Toast.makeText(AddParent.this, "Registration Successful", Toast.LENGTH_SHORT).show();
-                    } else {
-                        progressDialog.dismiss();
-                        Log.d("TAG", "onComplete: "+ task.getException());
-                        Toast.makeText(AddParent.this, "Registration Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+//            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if (task.isSuccessful()) {
+//                        progressDialog.dismiss();
+//
+//                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+//                        String userId = firebaseUser.getUid();
+//
+//                        dbReference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.PARENTS_USER);
+//                        HashMap<String, String> hashMap = new HashMap<>();
+//                        hashMap.put("id", userId);
+//                        hashMap.put("username", name);
+//                        hashMap.put("email", email);
+//                        hashMap.put("password", password);
+//                        hashMap.put("subject", subject);
+//                        hashMap.put("child", child);
+//
+//                        dbReference.push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<Void> task) {
+//                                if (task.isSuccessful()) {
+//                                    loginTeacher(teacherEmail,teacherPassword);
+//                                    sendUserToMainActivity();
+//                                }
+//                            }
+//                        });
+//                        Toast.makeText(AddParent.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        progressDialog.dismiss();
+//                        Log.d("TAG", "onComplete: "+ task.getException());
+//                        Toast.makeText(AddParent.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
         }
     }
 
     private void loginTeacher(String teacherEmail, String teacherPassword) {
-        mAuth.signInWithEmailAndPassword(teacherEmail, teacherPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    sendUserToMainActivity();
-                } else {
-                    progressDialog.dismiss();
-                }
-            }
-        });
+//        mAuth.signInWithEmailAndPassword(teacherEmail, teacherPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if (task.isSuccessful()) {
+//                    sendUserToMainActivity();
+//                } else {
+//                    progressDialog.dismiss();
+//                }
+//            }
+//        });
     }
 
     private void sendUserToMainActivity() {
