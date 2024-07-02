@@ -2,14 +2,13 @@ package com.example.androidprojecttutor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+
 
 public class tutordashboard extends AppCompatActivity {
 
@@ -20,13 +19,10 @@ public class tutordashboard extends AppCompatActivity {
 
     String tutorId, email, password;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tutordashboard);
-
 
         setTitle("Tutor");
 
@@ -47,7 +43,7 @@ public class tutordashboard extends AppCompatActivity {
         btn_viewStudents.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(tutordashboard.this, tutorstudentinfo.class);
+             //   Intent intent = new Intent(tutordashboard.this, tutorstudentinfo.class);
                 intent.putExtra("email", email);
                 intent.putExtra("password", password);
                 intent.putExtra("tutorId", tutorId);
@@ -57,11 +53,17 @@ public class tutordashboard extends AppCompatActivity {
         });
 
 
+    }
 
-
-
-
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Handle the back button action
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

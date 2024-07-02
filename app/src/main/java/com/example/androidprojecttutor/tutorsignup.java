@@ -34,9 +34,7 @@ import java.util.UUID;
 public class tutorsignup extends AppCompatActivity {
     public static final String TUTOR_USERS = "TutorUsers";
         public static final String STUDENTS_USER = "StudentUsers";
-        public static final String PARENTS_USER = "ParentsUsers";
-        public static final String ATTENDANCE = "Attendance";
-        public static final String REMARKS = "Remarks";
+
 
     EditText et_email, et_password, et_confirmPassword;
         Button btn_Register;
