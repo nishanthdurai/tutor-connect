@@ -13,9 +13,20 @@
         android:theme="@style/Theme.Androidprojecttutor"
         tools:targetApi="31">
         <activity
+            android:name=".tutorstudentinfo"
+            android:exported="false" />
+        <activity
+            android:name=".studentpasswordchange"
+            android:exported="false" />
+        <activity
+            android:name=".tutorsignin"
+            android:exported="false" />
+        <activity
+            android:name=".tutorsignup"
+            android:exported="false" />
+        <activity
             android:name=".logopage"
-            android:exported="true" >
-
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,16 +76,8 @@
             android:name=".tutorreset"
             android:exported="false" />
         <activity
-            android:name=".tutorsignin"
-            android:exported="false" />
-        <activity
-            android:name=".tutorsignup"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

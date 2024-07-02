@@ -9,4 +9,5 @@
     <color name="textGreen">#ef0148</color>
     <color name="grey">#808080</color>
     <color name="background2">#FFFFFFFF</color>
+    <color name="background3">#808080</color>
 </resources>
