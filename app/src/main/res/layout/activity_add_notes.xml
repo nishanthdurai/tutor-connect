@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:hint="Select File from storage"
-        android:textColor="@color/textColor"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
     <Button

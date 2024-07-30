@@ -25,12 +25,14 @@ public class MainActivity extends AppCompatActivity {
         btn_student = findViewById(R.id.btn_student);
         btn_parent = findViewById(R.id.btn_parent);
 
-        btn_tutor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, TutorSignIn.class)));
+        btn_tutor.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,
+                TutorSignIn.class)));
 
-        btn_student.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, StudentSignIn.class)));
+        btn_student.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,
+                StudentSignIn.class)));
 
-        btn_parent.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, ParentSignIn.class)));
-
+        btn_parent.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,
+                ParentSignIn.class)));
 
     }
 }

@@ -46,14 +46,17 @@ public class ViewNotes extends AppCompatActivity {
         rv_viewnotes.setLayoutManager(new LinearLayoutManager(ViewNotes.this));
 
         loadNotes();
-
     }
 
     private void loadNotes() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser.getUid() != null) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("notes").child(firebaseUser.getUid());
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                    .child("notes")
+                    .child(firebaseUser.getUid());
+
             Log.d("TAG1", "loadNotes: " + reference.getKey());
+
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -69,9 +72,7 @@ public class ViewNotes extends AppCompatActivity {
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
+                public void onCancelled(@NonNull DatabaseError error) { }
             });
         }
     }

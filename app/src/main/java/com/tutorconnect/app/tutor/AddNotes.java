@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
@@ -26,12 +28,12 @@ import com.tutorconnect.app.R;
 
 public class AddNotes extends AppCompatActivity {
     EditText editText;
-    Button btn, btn_selectPdf;
+    Button btnUploadPdf, btn_selectPdf;
 
     StorageReference storageReference;
     DatabaseReference databaseReference;
 
-    String id;
+    String tutorId;
 
 
     @Override
@@ -48,13 +50,13 @@ public class AddNotes extends AppCompatActivity {
         }
 
         editText = findViewById(R.id.editext);
-        btn = findViewById(R.id.btn);
+        btnUploadPdf = findViewById(R.id.btn);
         btn_selectPdf = findViewById(R.id.btn_selectPdf);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        btn.setEnabled(false);
+        btnUploadPdf.setEnabled(false);
         btn_selectPdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,8 +65,7 @@ public class AddNotes extends AppCompatActivity {
         });
 
         Intent intent = getIntent();
-        id = intent.getStringExtra("userId");
-
+        tutorId = intent.getStringExtra("tutorId");
     }
 
     private void selectPdf() {
@@ -79,8 +80,8 @@ public class AddNotes extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 12 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            btn.setEnabled(true);
-            btn.setOnClickListener(new View.OnClickListener() {
+            btnUploadPdf.setEnabled(true);
+            btnUploadPdf.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String name = editText.getText().toString();
@@ -109,20 +110,31 @@ public class AddNotes extends AppCompatActivity {
                         Uri uri = uriTask.getResult();
 
                         putPDF putPDF = new putPDF(name, uri.toString());
-                        databaseReference.child("notes").child(id).push().setValue(putPDF);
+                        databaseReference.child("notes").child(tutorId).push().setValue(putPDF);
 
                         Toast.makeText(AddNotes.this, "Notes Uploaded", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
 
+                        editText.setText("");
 
+                        btnUploadPdf.setEnabled(false);
                     }
-                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                progressDialog.setMessage("File Uploaded.." + (int) progress + "%");
-            }
-        });
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                        progressDialog.setMessage("File Uploaded.." + (int) progress + "%");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("Custom logs", "onFailure: ", e);
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), "Error uploading file", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
     }
 

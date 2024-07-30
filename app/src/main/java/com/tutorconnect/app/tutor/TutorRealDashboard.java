@@ -53,7 +53,6 @@ public class TutorRealDashboard extends AppCompatActivity {
                 intent.putExtra("email", email);
                 intent.putExtra("password", password);
                 intent.putExtra("tutorId", tutorId);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -62,8 +61,7 @@ public class TutorRealDashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TutorRealDashboard.this, AddNotes.class);
-                intent.putExtra("userId", tutorId);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("tutorId", tutorId);
                 startActivity(intent);
             }
         });
@@ -72,7 +70,6 @@ public class TutorRealDashboard extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TutorRealDashboard.this, uploadAssignment.class);
                 intent.putExtra("userId", tutorId);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
@@ -81,7 +78,6 @@ public class TutorRealDashboard extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(TutorRealDashboard.this, ViewNotes.class);
                 intent.putExtra("userId", tutorId);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
