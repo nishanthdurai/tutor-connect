@@ -57,6 +57,15 @@ public class TutorRealDashboard extends AppCompatActivity {
             }
         });
 
+        btn_viewAssignment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TutorRealDashboard.this, ViewAssignment.class);
+                intent.putExtra("tutorId", tutorId);
+                startActivity(intent);
+            }
+        });
+
         btn_uploadNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +77,7 @@ public class TutorRealDashboard extends AppCompatActivity {
         btn_uploadAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(TutorRealDashboard.this, uploadAssignment.class);
+                Intent intent = new Intent(TutorRealDashboard.this, UploadAssignment.class);
                 intent.putExtra("userId", tutorId);
                 startActivity(intent);
             }

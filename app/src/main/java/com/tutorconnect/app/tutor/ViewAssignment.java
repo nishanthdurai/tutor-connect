@@ -1,8 +1,11 @@
 package com.tutorconnect.app.tutor;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,14 +28,16 @@ import java.util.ArrayList;
 public class ViewAssignment extends AppCompatActivity {
     ArrayList<Notes> arrayList = new ArrayList<>();
     viewNotesAdapter adapter;
-    RecyclerView rv_viewnotes;
+    RecyclerView rvViewAssignments;
+
+    String tutorId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_assignment);
 
-        setTitle("Tutor");
+        setTitle("Tutor - View assignments");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
@@ -40,38 +45,47 @@ public class ViewAssignment extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        rv_viewnotes = findViewById(R.id.rv_viewnotes);
-        rv_viewnotes.setHasFixedSize(true);
-        rv_viewnotes.setLayoutManager(new LinearLayoutManager(ViewAssignment.this));
+        rvViewAssignments = findViewById(R.id.rv_viewAssignment);
+        rvViewAssignments.setHasFixedSize(true);
+        rvViewAssignments.setLayoutManager(new LinearLayoutManager(ViewAssignment.this));
+
+        Intent intent = getIntent();
+        tutorId = intent.getStringExtra("tutorId");
 
         loadNotes();
 
     }
 
     private void loadNotes() {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUser.getUid() != null) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("assignment").child(firebaseUser.getUid());
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    arrayList.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Notes model = dataSnapshot.getValue(Notes.class);
-                        Log.d("TAG1", "onDataChange: " + model);
-                        arrayList.add(model);
-                    }
-                    Log.d("TAG1", "arraylist size : " + arrayList.size());
-                    adapter = new viewNotesAdapter(ViewAssignment.this, arrayList);
-                    rv_viewnotes.setAdapter(adapter);
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("File is loading...");
+        progressDialog.show();
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("assignment").child(tutorId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                arrayList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Notes model = dataSnapshot.getValue(Notes.class);
+                    Log.d("TAG1", "onDataChange: " + model);
+                    arrayList.add(model);
                 }
-            });
-        }
+                Log.d("TAG1", "arraylist size : " + arrayList.size());
+                adapter = new viewNotesAdapter(ViewAssignment.this, arrayList);
+                rvViewAssignments.setAdapter(adapter);
+
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Error loading assignments", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+
+        });
     }
 
     @Override

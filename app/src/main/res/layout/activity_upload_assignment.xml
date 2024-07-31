@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".tutor.uploadAssignment">
+    tools:context=".tutor.UploadAssignment">
 
     <EditText
         android:id="@+id/editext"
@@ -12,7 +12,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:hint="Select File from storage"
-        android:textColor="#0000FF"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
     <Button

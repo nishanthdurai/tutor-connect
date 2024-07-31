@@ -45,7 +45,7 @@
             android:name=".tutor.ViewNotes"
             android:exported="true" />
         <activity
-            android:name=".tutor.uploadAssignment"
+            android:name=".tutor.UploadAssignment"
             android:exported="true" />
         <activity
             android:name=".tutor.AddNotes"

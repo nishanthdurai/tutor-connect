@@ -41,7 +41,7 @@ public class AddNotes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_notes);
 
-        setTitle("Tutor");
+        setTitle("Tutor - Add notes");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
