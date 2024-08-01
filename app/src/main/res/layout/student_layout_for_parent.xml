@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background">
+    android:background="@color/grey"
+    android:layout_marginTop="10dp">
 
     <RelativeLayout
         android:id="@+id/ll_groupCSE"
@@ -37,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="Tutor Connect"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
 
                 <TextView
