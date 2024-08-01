@@ -1,8 +1,10 @@
 package com.tutorconnect.app.parent;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +39,7 @@ public class ParentDashboard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_dashboard);
 
-        setTitle("Dashboard");
+        setTitle("Parent - Dashboard");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
@@ -57,28 +59,32 @@ public class ParentDashboard extends AppCompatActivity {
     }
 
     private void getAllAttendance() {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUser.getUid() != null) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                    .child("Attendance").child(parentName);
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    mList.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Parent model = dataSnapshot.getValue(Parent.class);
-                        mList.add(model);
-                    }
-                    mAdapter = new StudentAdapter(ParentDashboard.this, mList);
-                    recyclerView.setAdapter(mAdapter);
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Attendance").child(parentName);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Parent model = dataSnapshot.getValue(Parent.class);
+                    mList.add(model);
                 }
-            });
-        }
+                mAdapter = new StudentAdapter(ParentDashboard.this, mList);
+                recyclerView.setAdapter(mAdapter);
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Error loading", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
     }
 
     @Override

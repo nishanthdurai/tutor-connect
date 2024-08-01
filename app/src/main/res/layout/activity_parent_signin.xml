@@ -43,7 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:hint="Email"
+            android:text="nishanthduraisamy@gmail.com"
             android:textColor="@color/textColor"
+            android:textColorHint="@color/grey"
             android:textSize="16sp" />
 
         <EditText
@@ -52,7 +54,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:hint="Password"
+            android:text="password"
             android:textColor="@color/textColor"
+            android:textColorHint="@color/grey"
             android:textSize="16sp" />
 
         <Button
