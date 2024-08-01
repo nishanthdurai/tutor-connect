@@ -59,7 +59,8 @@ public class ParentDashboard extends AppCompatActivity {
     private void getAllAttendance() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (firebaseUser.getUid() != null) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.ATTENDANCE).child(parentName);
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                    .child("Attendance").child(parentName);
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {

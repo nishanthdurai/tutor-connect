@@ -19,13 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.model.StudentTutor;
-import com.tutorconnect.app.tutor.TutorSignUp;
 import com.tutorconnect.app.tutor.ViewParent;
 
 import java.time.LocalDate;
@@ -73,7 +70,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
                 progressDialog.setTitle("Attendance....");
                 progressDialog.show();
                 studentAttendance = "Present";
-                markAsPresent(model, date);
+                markAttendance(model, date);
             }
         });
         holder.btn_absent.setOnClickListener(new View.OnClickListener() {
@@ -83,7 +80,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
                 progressDialog.setTitle("Attendance....");
                 progressDialog.show();
                 studentAttendance = "Absent";
-                markAsPresent(model, date);
+                markAttendance(model, date);
             }
         });
         holder.btn_remarks.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +125,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
                     progressDialog.setTitle("Adding...");
                     progressDialog.setCanceledOnTouchOutside(false);
                     studentRemarks = remarks+"/10";
-                    markAsPresent(model, date);
+                    markAttendance(model, date);
                     alertDialog.dismiss();
                 }
             }
@@ -160,13 +157,13 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.viewHold
 //        });
 //    }
 
-    private void markAsPresent(StudentTutor model, String date) {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = firebaseUser.getUid();
-
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child(TutorSignUp.ATTENDANCE).child(model.getName()).child(date);
+    private void markAttendance(StudentTutor model, String date) {
+                DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                        .child("Attendance")
+                        .child(model.getName())
+                        .child(date);
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("id", userId);
+        hashMap.put("tutorId", tutorId);
         hashMap.put("studentName", model.getName());
         hashMap.put("email", model.getEmail());
         hashMap.put("studentSubject", model.getSubject());

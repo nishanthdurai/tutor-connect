@@ -64,6 +64,7 @@ public class StudentRealDashboard extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         btnViewRemarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
