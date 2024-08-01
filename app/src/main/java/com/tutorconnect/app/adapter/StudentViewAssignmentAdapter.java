@@ -25,17 +25,21 @@ import com.tutorconnect.app.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class studentViewAssignmentAdapter extends RecyclerView.Adapter<studentViewAssignmentAdapter.viewholder> {
+public class StudentViewAssignmentAdapter extends
+        RecyclerView.Adapter<StudentViewAssignmentAdapter.viewholder> {
     Context context;
     ArrayList<Notes> viewNotes;
-    private ProgressDialog progressDialog;
     String studentName = "";
+    String studentId = "";
+    private ProgressDialog progressDialog;
 
-    public studentViewAssignmentAdapter(Context context, ArrayList<Notes> viewNotes, String studentName) {
+    public StudentViewAssignmentAdapter(Context context, ArrayList<Notes> viewNotes,
+                                        String studentName, String studentId) {
         this.context = context;
         this.viewNotes = viewNotes;
-        progressDialog = new ProgressDialog(context);
         this.studentName = studentName;
+        this.studentId = studentId;
+        progressDialog = new ProgressDialog(context);
     }
 
     @NonNull
@@ -50,7 +54,7 @@ public class studentViewAssignmentAdapter extends RecyclerView.Adapter<studentVi
         Notes notes = viewNotes.get(position);
         Log.d("TAG1", "onBindViewHolder: " + notes);
         holder.textView.setText(notes.getName());
-        holder.btn_markAsDone.setOnClickListener(new View.OnClickListener() {
+        holder.btnMarkAsDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 progressDialog.setMessage("Marking Completed");
@@ -62,14 +66,14 @@ public class studentViewAssignmentAdapter extends RecyclerView.Adapter<studentVi
     }
 
     private void markAsDone(Notes model) {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = firebaseUser.getUid();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Done").child(model.getName());
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("Done").child(model.getName());
+
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("id", userId);
+        hashMap.put("id", studentId);
         hashMap.put("studentName", studentName);
-        hashMap.put("name",model.getName());
+        hashMap.put("name", model.getName());
         reference.push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -91,13 +95,13 @@ public class studentViewAssignmentAdapter extends RecyclerView.Adapter<studentVi
     class viewholder extends RecyclerView.ViewHolder {
 
         TextView textView;
-        Button btn_markAsDone;
+        Button btnMarkAsDone;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
             textView = itemView.findViewById(R.id.textview);
-            btn_markAsDone = itemView.findViewById(R.id.btn_markAsDone);
+            btnMarkAsDone = itemView.findViewById(R.id.btn_markAsDone);
         }
     }
 }

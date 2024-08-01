@@ -12,19 +12,21 @@ import com.tutorconnect.app.R;
 
 public class StudentRealDashboard extends AppCompatActivity {
 
-    CardView btn_viewAssignment;
-    CardView btn_viewNotes;
-    CardView btn_viewRemarks;
+    CardView btnViewAssignment;
+    CardView btnViewNotes;
+    CardView btnViewRemarks;
 
     Intent intent;
-    String name = "";
+    String studentName = "";
+    String studentId = "";
+    String tutorId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_real_dashboard);
 
-        setTitle("Dashboard");
+        setTitle("Student - Dashboard");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
@@ -32,38 +34,43 @@ public class StudentRealDashboard extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        btn_viewAssignment = findViewById(R.id.cv_viewAssignment);
-        btn_viewNotes = findViewById(R.id.cv_viewNotes);
-        btn_viewRemarks = findViewById(R.id.cv_viewRemarks);
+        btnViewAssignment = findViewById(R.id.studentViewAssignment);
+        btnViewNotes = findViewById(R.id.studentViewNotes);
+        btnViewRemarks = findViewById(R.id.studentViewRemarks);
 
         intent = getIntent();
-        name = intent.getStringExtra("StudentSignin");
+        studentName = intent.getStringExtra("studentName");
+        studentId = intent.getStringExtra("studentId");
+        tutorId = intent.getStringExtra("tutorId");
 
-        btn_viewNotes.setOnClickListener(new View.OnClickListener() {
+        btnViewNotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentRealDashboard.this, StudentViewNotes.class);
-                intent.putExtra("studentName", name);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("studentName", studentName);
+                intent.putExtra("studentId", studentId);
+                intent.putExtra("tutorId", tutorId);
                 startActivity(intent);
             }
         });
 
-        btn_viewAssignment.setOnClickListener(new View.OnClickListener() {
+        btnViewAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentRealDashboard.this, ViewAssignment.class);
-                intent.putExtra("studentName", name);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("studentName", studentName);
+                intent.putExtra("studentId", studentId);
+                intent.putExtra("tutorId", tutorId);
                 startActivity(intent);
             }
         });
-        btn_viewRemarks.setOnClickListener(new View.OnClickListener() {
+        btnViewRemarks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentRealDashboard.this, StudentDashboard.class);
-                intent.putExtra("studentName", name);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("studentName", studentName);
+                intent.putExtra("studentId", studentId);
+                intent.putExtra("tutorId", tutorId);
                 startActivity(intent);
             }
         });

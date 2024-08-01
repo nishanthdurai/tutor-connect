@@ -11,8 +11,16 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:padding="8dp"
-        android:text="Assingment 1"
+        android:text="Assignment 1"
         android:textColor="@color/textColor"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btn_markAsDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textview"
+        android:layout_centerHorizontal="true"
+        android:text="Mark as Done" />
 
 </RelativeLayout>

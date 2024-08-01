@@ -10,18 +10,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tutorconnect.app.model.Notes;
 import com.tutorconnect.app.R;
+import com.tutorconnect.app.model.Notes;
 
 import java.util.ArrayList;
 
 public class viewNotesAdapter extends RecyclerView.Adapter<viewNotesAdapter.viewholder> {
     Context context;
     ArrayList<Notes> viewNotes;
+    Boolean showMarkAsDone;
 
-    public viewNotesAdapter(Context context, ArrayList<Notes> viewNotes) {
+    public viewNotesAdapter(Context context, ArrayList<Notes> viewNotes, boolean showMarkAsDone) {
         this.context = context;
         this.viewNotes = viewNotes;
+        this.showMarkAsDone = showMarkAsDone;
     }
 
     @NonNull
@@ -36,6 +38,12 @@ public class viewNotesAdapter extends RecyclerView.Adapter<viewNotesAdapter.view
         Notes notes = viewNotes.get(position);
         Log.d("TAG1", "onBindViewHolder: "  + notes);
         holder.textView.setText(notes.getName());
+
+        if(showMarkAsDone) {
+            holder.doneAction.setVisibility(View.VISIBLE);
+        } else {
+            holder.doneAction.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -46,11 +54,13 @@ public class viewNotesAdapter extends RecyclerView.Adapter<viewNotesAdapter.view
     class viewholder extends RecyclerView.ViewHolder {
 
         TextView textView;
+        TextView doneAction;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
             textView = itemView.findViewById(R.id.textview);
+            doneAction = itemView.findViewById(R.id.btn_markAsDone);
         }
     }
 }

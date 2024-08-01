@@ -77,7 +77,7 @@ public class ViewNotes extends AppCompatActivity {
                     arrayList.add(model);
                 }
                 Log.d("TAG1", "arraylist size : " + arrayList.size());
-                adapter = new viewNotesAdapter(ViewNotes.this, arrayList);
+                adapter = new viewNotesAdapter(ViewNotes.this, arrayList, false);
                 rvViewNotes.setAdapter(adapter);
 
                 progressDialog.dismiss();

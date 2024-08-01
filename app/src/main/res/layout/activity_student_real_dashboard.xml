@@ -31,7 +31,7 @@
                 android:gravity="center">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_viewAssignment"
+                    android:id="@+id/studentViewAssignment"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:cardCornerRadius="16dp">
@@ -72,7 +72,7 @@
                 android:gravity="center">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_viewNotes"
+                    android:id="@+id/studentViewNotes"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:cardCornerRadius="16dp">
@@ -124,7 +124,7 @@
                 android:gravity="center">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cv_viewRemarks"
+                    android:id="@+id/studentViewRemarks"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:cardCornerRadius="16dp">

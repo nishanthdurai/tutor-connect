@@ -79,12 +79,6 @@
             android:exported="true" />
         <activity
             android:name=".student.StudentSignIn"
-            android:exported="true" />
-        <activity
-            android:name=".tutor.TutorDashboard"
-            android:exported="true" />
-        <activity
-            android:name=".tutor.TutorSignIn"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -92,6 +86,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".tutor.TutorDashboard"
+            android:exported="true" />
+        <activity
+            android:name=".tutor.TutorSignIn"
+            android:exported="true"  />
 
         <activity
             android:name=".tutor.TutorSignUp"

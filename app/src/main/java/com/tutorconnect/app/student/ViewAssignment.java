@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,18 +23,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tutorconnect.app.model.Notes;
 import com.tutorconnect.app.R;
-import com.tutorconnect.app.adapter.studentViewAssignmentAdapter;
+import com.tutorconnect.app.adapter.StudentViewAssignmentAdapter;
 
 import java.util.ArrayList;
 
 public class ViewAssignment extends AppCompatActivity {
 
     ArrayList<Notes> arrayList = new ArrayList<>();
-    studentViewAssignmentAdapter adapter;
+    StudentViewAssignmentAdapter adapter;
     RecyclerView rv_viewnotes;
 
     Intent intent;
-    String childName = "";
+    String studentName = "";
+    String studentId = "";
+    String tutorId = "";
 
     Button btn_markAsDone;
     private ProgressDialog progressDialog;
@@ -43,7 +46,7 @@ public class ViewAssignment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_assignment2);
 
-        setTitle("Student");
+        setTitle("Student - View Assignment");
 
         // Enable the Up button
         if (getSupportActionBar() != null) {
@@ -52,13 +55,15 @@ public class ViewAssignment extends AppCompatActivity {
         }
 
         intent = getIntent();
-        childName = intent.getStringExtra("childName");
+        studentName = intent.getStringExtra("studentName");
+        studentId = intent.getStringExtra("studentId");
+        tutorId = intent.getStringExtra("tutorId");
 
         rv_viewnotes = findViewById(R.id.rv_viewAssignment);
         rv_viewnotes.setHasFixedSize(true);
         rv_viewnotes.setLayoutManager(new LinearLayoutManager(ViewAssignment.this));
 
-        btn_markAsDone= findViewById(R.id.btn_markAsDone);
+        btn_markAsDone = findViewById(R.id.btn_markAsDone);
 
         progressDialog = new ProgressDialog(ViewAssignment.this);
         btn_markAsDone.setOnClickListener(new View.OnClickListener() {
@@ -75,31 +80,37 @@ public class ViewAssignment extends AppCompatActivity {
     }
 
     private void loadNotes() {
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUser.getUid() != null) {
-            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("assignment");
-            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    arrayList.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            Notes model = dataSnapshot1.getValue(Notes.class);
-                            Log.d("TAG1", "onDataChange: " + model);
-                            arrayList.add(model);
-                        }
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("File is loading...");
+        progressDialog.show();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
+                .child("assignment").child(tutorId);
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                arrayList.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                        Notes model = dataSnapshot1.getValue(Notes.class);
+                        Log.d("TAG1", "onDataChange: " + model);
+                        arrayList.add(model);
                     }
-                    Log.d("TAG1", "arraylist size : " + arrayList.size());
-                    adapter = new studentViewAssignmentAdapter(ViewAssignment.this, arrayList, childName);
-                    rv_viewnotes.setAdapter(adapter);
                 }
+                Log.d("TAG1", "arraylist size : " + arrayList.size());
+                adapter = new StudentViewAssignmentAdapter(ViewAssignment.this, arrayList, studentName, studentId);
+                rv_viewnotes.setAdapter(adapter);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                progressDialog.dismiss();
+            }
 
-                }
-            });
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Error loading assignments", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+            }
+        });
     }
 
     @Override

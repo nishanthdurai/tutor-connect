@@ -1,7 +1,7 @@
 package com.tutorconnect.app.tutor;
 
 public class putPDF {
-    public String name,url;
+    public String name, url;
 
     public putPDF() {
     }
@@ -21,6 +21,7 @@ public class putPDF {
     public void setUrl(String url) {
         this.url = url;
     }
+
 
     public putPDF(String name, String url) {
         this.name = name;
