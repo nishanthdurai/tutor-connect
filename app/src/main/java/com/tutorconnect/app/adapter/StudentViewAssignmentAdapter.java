@@ -32,14 +32,16 @@ public class StudentViewAssignmentAdapter extends
     String studentName = "";
     String studentId = "";
     private ProgressDialog progressDialog;
+    Boolean isAssignment = true;
 
     public StudentViewAssignmentAdapter(Context context, ArrayList<Notes> viewNotes,
-                                        String studentName, String studentId) {
+                                        String studentName, String studentId, Boolean isAssignment) {
         this.context = context;
         this.viewNotes = viewNotes;
         this.studentName = studentName;
         this.studentId = studentId;
         progressDialog = new ProgressDialog(context);
+        this.isAssignment = isAssignment;
     }
 
     @NonNull
@@ -68,7 +70,7 @@ public class StudentViewAssignmentAdapter extends
     private void markAsDone(Notes model) {
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                .child("Done").child(model.getName());
+                .child(isAssignment ? "completed_assignments" : "completed_notes").child(model.getName());
 
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("id", studentId);

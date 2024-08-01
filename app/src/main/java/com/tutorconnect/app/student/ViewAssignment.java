@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,16 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tutorconnect.app.model.Notes;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.adapter.StudentViewAssignmentAdapter;
+import com.tutorconnect.app.model.Notes;
 
 import java.util.ArrayList;
 
@@ -31,15 +27,13 @@ public class ViewAssignment extends AppCompatActivity {
 
     ArrayList<Notes> arrayList = new ArrayList<>();
     StudentViewAssignmentAdapter adapter;
-    RecyclerView rv_viewnotes;
+    RecyclerView rvViewAssignment;
 
     Intent intent;
     String studentName = "";
     String studentId = "";
     String tutorId = "";
 
-    Button btn_markAsDone;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,21 +53,21 @@ public class ViewAssignment extends AppCompatActivity {
         studentId = intent.getStringExtra("studentId");
         tutorId = intent.getStringExtra("tutorId");
 
-        rv_viewnotes = findViewById(R.id.rv_viewAssignment);
-        rv_viewnotes.setHasFixedSize(true);
-        rv_viewnotes.setLayoutManager(new LinearLayoutManager(ViewAssignment.this));
+        rvViewAssignment = findViewById(R.id.rvStudentViewAssignment);
+        rvViewAssignment.setHasFixedSize(true);
+        rvViewAssignment.setLayoutManager(new LinearLayoutManager(ViewAssignment.this));
 
-        btn_markAsDone = findViewById(R.id.btn_markAsDone);
-
-        progressDialog = new ProgressDialog(ViewAssignment.this);
-        btn_markAsDone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                progressDialog.setMessage("Marking Completed");
-                progressDialog.setTitle("Completed...");
-                progressDialog.show();
-            }
-        });
+//        btn_markAsDone = findViewById(R.id.btnStudentAssignmentMarkAsDone);
+//
+//        progressDialog = new ProgressDialog(ViewAssignment.this);
+//        btn_markAsDone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                progressDialog.setMessage("Marking Completed");
+//                progressDialog.setTitle("Completed...");
+//                progressDialog.show();
+//            }
+//        });
 
         loadNotes();
 
@@ -92,15 +86,14 @@ public class ViewAssignment extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 arrayList.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                        Notes model = dataSnapshot1.getValue(Notes.class);
-                        Log.d("TAG1", "onDataChange: " + model);
-                        arrayList.add(model);
-                    }
+                    Notes model = dataSnapshot.getValue(Notes.class);
+                    Log.d("TAG1", "onDataChange: " + model);
+                    arrayList.add(model);
                 }
                 Log.d("TAG1", "arraylist size : " + arrayList.size());
-                adapter = new StudentViewAssignmentAdapter(ViewAssignment.this, arrayList, studentName, studentId);
-                rv_viewnotes.setAdapter(adapter);
+                adapter = new StudentViewAssignmentAdapter(ViewAssignment.this, arrayList,
+                        studentName, studentId, true);
+                rvViewAssignment.setAdapter(adapter);
 
                 progressDialog.dismiss();
             }
