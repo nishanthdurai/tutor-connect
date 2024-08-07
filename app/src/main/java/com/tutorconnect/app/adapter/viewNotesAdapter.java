@@ -5,11 +5,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tutorconnect.app.PdfViewActivity;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.model.Notes;
 
@@ -39,6 +41,11 @@ public class viewNotesAdapter extends RecyclerView.Adapter<viewNotesAdapter.view
         Log.d("TAG1", "onBindViewHolder: "  + notes);
         holder.textView.setText(notes.getName());
 
+        // download pdf
+        holder.relativeLayout.setOnClickListener((v) -> {
+            PdfViewActivity.start(context, notes.getUrl());
+        });
+
         if(showMarkAsDone) {
             holder.doneAction.setVisibility(View.VISIBLE);
         } else {
@@ -55,12 +62,14 @@ public class viewNotesAdapter extends RecyclerView.Adapter<viewNotesAdapter.view
 
         TextView textView;
         TextView doneAction;
+        RelativeLayout relativeLayout;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
             textView = itemView.findViewById(R.id.textview);
             doneAction = itemView.findViewById(R.id.btn_markAsDone);
+            relativeLayout = itemView.findViewById(R.id.relative_layout);
         }
     }
 }
