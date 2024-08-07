@@ -34,6 +34,10 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packagingOptions {
+        exclude("META-INF/NOTICE.md")
+        exclude("META-INF/LICENSE.md")
+    }
 }
 
 dependencies {
@@ -62,4 +66,5 @@ dependencies {
     implementation(libs.circleimageview)
     implementation(libs.glide)
 
+    implementation(libs.android.mail)
 }
