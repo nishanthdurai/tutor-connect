@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,7 @@ public class StudentDashboard extends AppCompatActivity {
     String studentName = "";
     String studentId = "";
     String tutorId = "";
+    TextView tvNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,8 @@ public class StudentDashboard extends AppCompatActivity {
         }
 
         recyclerView = findViewById(R.id.rv_showAllAttendance);
+        tvNoData = findViewById(R.id.tv_no_data);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -78,6 +83,14 @@ public class StudentDashboard extends AppCompatActivity {
                 }
                 mAdapter = new StudentAdapter(StudentDashboard.this, mList);
                 recyclerView.setAdapter(mAdapter);
+
+                if (mList.isEmpty()) {
+                    tvNoData.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    tvNoData.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
 
                 progressDialog.dismiss();
             }

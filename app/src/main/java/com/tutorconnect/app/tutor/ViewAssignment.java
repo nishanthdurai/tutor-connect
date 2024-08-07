@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,9 +19,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tutorconnect.app.model.Notes;
 import com.tutorconnect.app.R;
 import com.tutorconnect.app.adapter.viewNotesAdapter;
+import com.tutorconnect.app.model.Notes;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class ViewAssignment extends AppCompatActivity {
     RecyclerView rvViewAssignments;
 
     String tutorId;
+    TextView tvNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,9 @@ public class ViewAssignment extends AppCompatActivity {
         }
 
         rvViewAssignments = findViewById(R.id.rv_viewAssignment);
+        tvNoData = findViewById(R.id.tv_no_data);
+
+
         rvViewAssignments.setHasFixedSize(true);
         rvViewAssignments.setLayoutManager(new LinearLayoutManager(ViewAssignment.this));
 
@@ -73,6 +79,14 @@ public class ViewAssignment extends AppCompatActivity {
                 Log.d("TAG1", "arraylist size : " + arrayList.size());
                 adapter = new viewNotesAdapter(ViewAssignment.this, arrayList, false);
                 rvViewAssignments.setAdapter(adapter);
+
+                if (arrayList.isEmpty()) {
+                    tvNoData.setVisibility(View.VISIBLE);
+                    rvViewAssignments.setVisibility(View.GONE);
+                } else {
+                    tvNoData.setVisibility(View.GONE);
+                    rvViewAssignments.setVisibility(View.VISIBLE);
+                }
 
                 progressDialog.dismiss();
             }

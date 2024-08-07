@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,8 @@ public class ViewNotes extends AppCompatActivity {
 
     String tutorId;
 
+    TextView tvNoData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,8 @@ public class ViewNotes extends AppCompatActivity {
         }
 
         rvViewNotes = findViewById(R.id.rvViewNotes);
+        tvNoData = findViewById(R.id.tv_no_data);
+
         rvViewNotes.setHasFixedSize(true);
         rvViewNotes.setLayoutManager(new LinearLayoutManager(ViewNotes.this));
 
@@ -79,6 +85,14 @@ public class ViewNotes extends AppCompatActivity {
                 Log.d("TAG1", "arraylist size : " + arrayList.size());
                 adapter = new viewNotesAdapter(ViewNotes.this, arrayList, false);
                 rvViewNotes.setAdapter(adapter);
+
+                if (arrayList.isEmpty()) {
+                    tvNoData.setVisibility(View.VISIBLE);
+                    rvViewNotes.setVisibility(View.GONE);
+                } else {
+                    tvNoData.setVisibility(View.GONE);
+                    rvViewNotes.setVisibility(View.VISIBLE);
+                }
 
                 progressDialog.dismiss();
             }

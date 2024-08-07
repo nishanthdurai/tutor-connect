@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tutorconnect.app.PdfViewActivity;
 import com.tutorconnect.app.model.Notes;
 import com.tutorconnect.app.R;
 
@@ -56,6 +58,11 @@ public class StudentViewAssignmentAdapter extends
         Notes notes = viewNotes.get(position);
         Log.d("TAG1", "onBindViewHolder: " + notes);
         holder.textView.setText(notes.getName());
+
+        holder.relativeLayout.setOnClickListener((v) -> {
+            PdfViewActivity.start(context, notes.getUrl());
+        });
+
         holder.btnMarkAsDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +83,7 @@ public class StudentViewAssignmentAdapter extends
         hashMap.put("id", studentId);
         hashMap.put("studentName", studentName);
         hashMap.put("name", model.getName());
+
         reference.push().setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
@@ -98,12 +106,14 @@ public class StudentViewAssignmentAdapter extends
 
         TextView textView;
         Button btnMarkAsDone;
+        RelativeLayout relativeLayout;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
             textView = itemView.findViewById(R.id.textview);
             btnMarkAsDone = itemView.findViewById(R.id.btn_markAsDone);
+            relativeLayout = itemView.findViewById(R.id.relative_layout);
         }
     }
 }

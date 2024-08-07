@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".tutor.TutorDashboard">
 
 
@@ -11,5 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/layout_student" />
+
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/primaryVariant"
+        android:padding="5dp"
+        android:text="No data to show..!"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
 
 </LinearLayout>

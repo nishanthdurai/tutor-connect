@@ -1,11 +1,15 @@
 package com.tutorconnect.app.tutor;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +42,7 @@ public class TutorDashboard extends AppCompatActivity {
     List<StudentTutor> mList = new ArrayList<>();
     RecyclerView recyclerView;
     StudentAdapter mAdapter;
+    TextView tvNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,8 @@ public class TutorDashboard extends AppCompatActivity {
         }
 
         recyclerView = findViewById(R.id.rv_showAllStudents);
+        tvNoData = findViewById(R.id.tv_no_data);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(TutorDashboard.this));
 
@@ -75,6 +82,11 @@ public class TutorDashboard extends AppCompatActivity {
     }
 
     private void getAllStudent() {
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading...");
+        progressDialog.show();
+
         Query emailQuery = dbReference.child("students")
                 .orderByChild("tutorId").equalTo(tutorId);
 
@@ -89,11 +101,22 @@ public class TutorDashboard extends AppCompatActivity {
                 }
                 mAdapter = new StudentAdapter(TutorDashboard.this, mList, tutorEmail, tutorId);
                 recyclerView.setAdapter(mAdapter);
+
+                if (mList.isEmpty()) {
+                    tvNoData.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    tvNoData.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+
+                progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getApplicationContext(), "Error loading students", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         });
     }

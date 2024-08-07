@@ -3,75 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".tutor.ViewNotes">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvViewNotes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="4dp"
         tools:listitem="@layout/notes_layout" />
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/ll_appBar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@color/background4"-->
-<!--        android:padding="16dp">-->
-
-
-<!--        -->
-
-<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;            android:id="@+id/tv_restAppBar"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:text="View Notes"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:textColor="@color/white"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:textSize="24sp"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:textStyle="bold" />&ndash;&gt;-->
-
-<!--    </RelativeLayout>-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textview1"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/ll_appBar"-->
-<!--        android:layout_marginLeft="8dp"-->
-<!--        android:layout_marginTop="20sp"-->
-<!--        android:layout_marginRight="8dp"-->
-<!--        android:layout_marginBottom="8dp"-->
-<!--        android:background="@color/black"-->
-<!--        android:padding="8dp"-->
-<!--        android:text="Note 1"-->
-<!--        android:textColor="@color/textColor"-->
-<!--        android:textSize="20sp" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textview2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/textview1"-->
-<!--        android:layout_margin="8dp"-->
-<!--        android:background="@color/black"-->
-<!--        android:padding="8dp"-->
-<!--        android:text="Note 2"-->
-<!--        android:textColor="@color/textColor"-->
-<!--        android:textSize="20sp" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textview3"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/textview2"-->
-<!--        android:layout_margin="8dp"-->
-<!--        android:background="@color/black"-->
-<!--        android:padding="8dp"-->
-<!--        android:text="Note 3"-->
-<!--        android:textColor="@color/textColor"-->
-<!--        android:textSize="20sp" />-->
-
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/primaryVariant"
+        android:padding="5dp"
+        android:text="No data to show..!"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
 
 </LinearLayout>

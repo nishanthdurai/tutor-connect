@@ -1,13 +1,16 @@
 package com.tutorconnect.app.tutor;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,7 +29,7 @@ import com.tutorconnect.app.model.ParentTutor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewParent extends AppCompatActivity {
+public class ViewParent extends AppCompatActivity implements ParentAdapter.OnParentActionListener {
 
     Intent intent;
 
@@ -37,8 +40,13 @@ public class ViewParent extends AppCompatActivity {
     DatabaseReference dbReference;
 
     List<ParentTutor> parentList = new ArrayList<>();
+    List<DataSnapshot> parentSnapshots = new ArrayList<>();
+
     RecyclerView recyclerView;
     ParentAdapter mAdapter;
+    TextView tvNoData;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +59,13 @@ public class ViewParent extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Loading...");
+        progressDialog.setCancelable(false);
+
         recyclerView = findViewById(R.id.rv_showAllParents);
+        tvNoData = findViewById(R.id.tv_no_data);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(ViewParent.this));
 
@@ -68,6 +82,7 @@ public class ViewParent extends AppCompatActivity {
     }
 
     private void getAllParents() {
+        progressDialog.show();
 
         String compositeKey = tutorId + "_" + studentId;
 
@@ -82,15 +97,48 @@ public class ViewParent extends AppCompatActivity {
                     ParentTutor model = dataSnapshot.getValue(ParentTutor.class);
                     Log.d("TAG", "onDataChange: " + model.getName());
                     parentList.add(model);
+                    parentSnapshots.add(dataSnapshot);
                 }
-                mAdapter = new ParentAdapter(ViewParent.this, parentList, tutorId);
+                mAdapter = new ParentAdapter(ViewParent.this, parentList, ViewParent.this);
                 recyclerView.setAdapter(mAdapter);
+
+                toggleEmptyView();
+                progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getApplicationContext(), "Error loading parent", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         });
+    }
+
+    private void toggleEmptyView() {
+        if (parentList.isEmpty()) {
+            tvNoData.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        } else {
+            tvNoData.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onRemoveParent(int position) {
+        progressDialog.show();
+
+        parentSnapshots.get(position).getRef().removeValue()
+                .addOnCompleteListener(task -> {
+                    progressDialog.dismiss();
+                    if (task.isSuccessful()) {
+                        mAdapter.removeItem(position);
+                        Toast.makeText(getApplicationContext(), "Parent removed", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error removing parent", Toast.LENGTH_SHORT).show();
+                    }
+                    toggleEmptyView();
+                });
     }
 
     private void onClickAddNewParent() {

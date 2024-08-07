@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,7 @@ public class ViewAssignment extends AppCompatActivity {
     String studentName = "";
     String studentId = "";
     String tutorId = "";
+    TextView tvNoData;
 
 
     @Override
@@ -54,29 +57,18 @@ public class ViewAssignment extends AppCompatActivity {
         tutorId = intent.getStringExtra("tutorId");
 
         rvViewAssignment = findViewById(R.id.rvStudentViewAssignment);
+        tvNoData = findViewById(R.id.tv_no_data);
+
         rvViewAssignment.setHasFixedSize(true);
         rvViewAssignment.setLayoutManager(new LinearLayoutManager(ViewAssignment.this));
 
-//        btn_markAsDone = findViewById(R.id.btnStudentAssignmentMarkAsDone);
-//
-//        progressDialog = new ProgressDialog(ViewAssignment.this);
-//        btn_markAsDone.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                progressDialog.setMessage("Marking Completed");
-//                progressDialog.setTitle("Completed...");
-//                progressDialog.show();
-//            }
-//        });
-
-        loadNotes();
-
+        loadAssignment();
     }
 
-    private void loadNotes() {
+    private void loadAssignment() {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("File is loading...");
+        progressDialog.setTitle("Loading...");
         progressDialog.show();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
@@ -94,6 +86,14 @@ public class ViewAssignment extends AppCompatActivity {
                 adapter = new StudentViewAssignmentAdapter(ViewAssignment.this, arrayList,
                         studentName, studentId, true);
                 rvViewAssignment.setAdapter(adapter);
+
+                if (arrayList.isEmpty()) {
+                    tvNoData.setVisibility(View.VISIBLE);
+                    rvViewAssignment.setVisibility(View.GONE);
+                } else {
+                    tvNoData.setVisibility(View.GONE);
+                    rvViewAssignment.setVisibility(View.VISIBLE);
+                }
 
                 progressDialog.dismiss();
             }

@@ -1,11 +1,11 @@
 package com.tutorconnect.app.adapter.tutor;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,13 +21,16 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.viewHolder
 
     private final Context mContext;
     private List<ParentTutor> parentList;
+    private final OnParentActionListener onParentActionListener;
 
-    private final ProgressDialog progressDialog;
+    public interface OnParentActionListener {
+        void onRemoveParent(int position);
+    }
 
-    public ParentAdapter(Context mContext, List<ParentTutor> parentList, String tutorId) {
+    public ParentAdapter(Context mContext, List<ParentTutor> parentList, OnParentActionListener onParentActionListener) {
         this.mContext = mContext;
         this.parentList = parentList;
-        progressDialog = new ProgressDialog(mContext);
+        this.onParentActionListener = onParentActionListener;
     }
 
     @NonNull
@@ -42,6 +45,12 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.viewHolder
     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
         ParentTutor model = parentList.get(position);
         holder.tv_parent_name.setText(model.getName());
+
+        holder.btn_RemoveParent.setOnClickListener((v) -> {
+            if (onParentActionListener != null) {
+                onParentActionListener.onRemoveParent(position);
+            }
+        });
     }
 
     @Override
@@ -49,15 +58,20 @@ public class ParentAdapter extends RecyclerView.Adapter<ParentAdapter.viewHolder
         return parentList.size();
     }
 
+    public void removeItem(int position) {
+        parentList.remove(position);
+        notifyItemRemoved(position);
+    }
+
     class viewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tv_parent_name;
+        private final Button btn_RemoveParent;
 
         public viewHolder(@NonNull View itemView) {
             super(itemView);
-
             tv_parent_name = itemView.findViewById(R.id.tv_parent_name);
+            btn_RemoveParent = itemView.findViewById(R.id.btn_remove_parent);
         }
     }
-
 }
